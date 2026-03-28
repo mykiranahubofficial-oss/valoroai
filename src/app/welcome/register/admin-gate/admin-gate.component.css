@@ -1,0 +1,174 @@
+/* Overlay */
+
+.admin-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,0.6);
+  backdrop-filter:blur(6px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+  padding:20px; /* prevents edge touching on mobile */
+}
+
+/* Popup Card */
+
+.admin-popup{
+  width:100%;
+  max-width:420px;
+  background:white;
+  padding:45px;
+  border-radius:20px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.25);
+  text-align:center;
+  animation:popupFade 0.35s ease;
+}
+
+/* Logo */
+
+.logo{
+  font-size:26px;
+  font-weight:800;
+  margin-bottom:20px;
+  color:#1e293b;
+}
+
+.logo span{
+  color:#6c63ff;
+}
+
+/* Title */
+
+.admin-popup h2{
+  margin-bottom:8px;
+  color:#1e293b;
+}
+
+/* Subtitle */
+
+.subtitle{
+  font-size:14px;
+  color:#64748b;
+  margin-bottom:28px;
+}
+
+/* Input */
+
+.input-wrapper input{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:2px solid #e2e8f0;
+  font-size:14px;
+  transition:all 0.25s;
+  box-sizing:border-box;
+}
+
+.input-wrapper input:focus{
+  outline:none;
+  border-color:#6c63ff;
+  box-shadow:0 0 0 4px rgba(108,99,255,0.1);
+}
+
+/* Button */
+
+.unlock-btn{
+  width:100%;
+  margin-top:18px;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  background:#6c63ff;
+  color:white;
+  font-weight:600;
+  font-size:15px;
+  cursor:pointer;
+  transition:all 0.25s;
+}
+
+.unlock-btn:hover{
+  background:#5848d6;
+  transform:translateY(-1px);
+}
+
+/* Error */
+
+.error{
+  margin-top:14px;
+  color:#ef4444;
+  font-size:13px;
+}
+
+/* Back button */
+
+.back-btn{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  border:2px solid #e2e8f0;
+  background:white;
+  color:#475569;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.25s;
+}
+
+.back-btn:hover{
+  background:#f1f5f9;
+  border-color:#cbd5f5;
+}
+
+/* Animation */
+
+@keyframes popupFade{
+  from{
+    opacity:0;
+    transform:translateY(25px) scale(0.95);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+}
+
+
+/* =====================
+   Tablet
+===================== */
+
+@media (max-width:768px){
+
+  .admin-popup{
+    padding:35px;
+  }
+
+  .logo{
+    font-size:24px;
+  }
+
+}
+
+
+/* =====================
+   Mobile
+===================== */
+
+@media (max-width:480px){
+
+  .admin-popup{
+    padding:28px 22px;
+  }
+
+  .logo{
+    font-size:22px;
+  }
+
+  .unlock-btn,
+  .back-btn{
+    padding:12px;
+    font-size:14px;
+  }
+
+}

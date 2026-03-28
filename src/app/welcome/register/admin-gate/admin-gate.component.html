@@ -1,0 +1,34 @@
+<div class="admin-overlay">
+
+  <div class="admin-popup">
+
+    <div class="logo">
+      Valora<span>.AI</span>
+    </div>
+
+    <h2>Admin Access</h2>
+    <p class="subtitle">This section is restricted. Please enter the admin password.</p>
+
+    <div class="input-wrapper">
+      <input
+        type="password"
+        [(ngModel)]="password"
+        placeholder="Enter admin password"
+        (keyup.enter)="unlock()"
+      >
+    </div>
+
+    <button class="unlock-btn" (click)="unlock()">
+      Unlock Dashboard
+    </button>
+
+    <!-- Back Button -->
+    <button class="back-btn" (click)="goBack()">
+      ← Back to Login
+    </button>
+
+    <p class="error" *ngIf="error">{{ error }}</p>
+
+  </div>
+
+</div>

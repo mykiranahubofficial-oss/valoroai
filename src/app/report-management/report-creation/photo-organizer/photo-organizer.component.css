@@ -1,0 +1,112 @@
+/* PAGE SPLIT */
+.organizer-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;   /* use 1fr instead of 50%+50% to avoid overflow */
+  height: 90vh;
+  background: #f1f3f6;
+  overflow: hidden;                  /* prevent any bleed */
+}
+
+/* LEFT SIDE */
+.organizer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  overflow: hidden;                  /* removed overflow-y:auto from container */
+  height: 100%;                      /* 100% of grid cell, not 100vh */
+}
+
+/* PHOTO UPLOAD */
+app-photo-gallery {
+  display: block;
+  width: 100%;
+  height: 200px;
+  flex-shrink: 0;                    /* never collapse */
+  overflow-y: auto;
+  background: #f1f3f6;
+  box-sizing: border-box;
+}
+
+/* PAGE PREVIEW */
+app-photo-layout-preview {
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  background: #f1f3f6;
+  padding: 10px;
+  min-height: 0;                     /* critical flexbox fix */
+  box-sizing: border-box;            /* padding doesn't bleed width */
+}
+
+/* RIGHT SIDE */
+.marcket-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;                      /* 100% of grid cell, not 100vh */
+  overflow: hidden;
+  border-left: 1px solid #e2e8f0;
+}
+
+.marcket-container app-marcket-photo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;                           /* fill remaining space */
+  min-height: 0;                     /* critical flexbox fix */
+  overflow: hidden;
+}
+
+/* ===============================
+TABLET
+================================ */
+@media (max-width: 1000px) {
+
+  .organizer-wrapper {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .organizer-container {
+    height: 100%;
+  }
+
+  app-photo-gallery {
+    height: 180px;
+  }
+
+}
+
+/* ===============================
+MOBILE
+================================ */
+@media (max-width: 600px) {
+
+  .organizer-wrapper {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    height: auto;
+    overflow: visible;
+  }
+
+  .organizer-container {
+    height: auto;
+    padding: 10px;
+    gap: 10px;
+    overflow: visible;
+  }
+
+  .marcket-container {
+    height: auto;
+    overflow: visible;
+  }
+
+  .marcket-container app-marcket-photo {
+    min-height: 500px;               /* give it breathing room on mobile */
+  }
+
+  app-photo-gallery {
+    height: 150px;
+    flex-shrink: 0;
+  }
+
+}

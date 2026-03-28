@@ -1,0 +1,164 @@
+<div class="ps-wrap">
+
+  <!-- ── Toast ── -->
+  <div class="ps-toast" *ngIf="message" [class.ps-toast--error]="isError">
+    {{ message }}
+  </div>
+
+  <!-- ── Header ── -->
+  <div class="ps-header">
+    <button class="ps-back-btn" *ngIf="step > 1" (click)="goBack()">&#8592; Back</button>
+    <div class="ps-breadcrumb">
+      <span [class.ps-breadcrumb__active]="step === 1">Agencies</span>
+      <span class="ps-breadcrumb__sep" *ngIf="step >= 2"> › </span>
+      <span *ngIf="step >= 2" [class.ps-breadcrumb__active]="step === 2">{{ selectedAgency?.agencyName }}</span>
+      <span class="ps-breadcrumb__sep" *ngIf="step === 3"> › </span>
+      <span *ngIf="step === 3" class="ps-breadcrumb__active">{{ selectedDraft?.draftName || 'Draft' }}</span>
+    </div>
+  </div>
+
+  <!-- ══ STEP 1 — SELECT AGENCY ══ -->
+  <div *ngIf="step === 1">
+    <p class="ps-hint">Select an agency to configure photo slots.</p>
+    <div class="ps-loading" *ngIf="loading">Loading agencies…</div>
+    <div class="ps-list" *ngIf="!loading">
+      <button class="ps-list__item" *ngFor="let agency of agencies" (click)="selectAgency(agency)">
+        <span class="ps-list__name">{{ agency.agencyName }}</span>
+        <span class="ps-list__meta">{{ agency.drafts?.length ?? 0 }} draft(s)</span>
+        <span class="ps-list__arrow">›</span>
+      </button>
+      <div class="ps-empty" *ngIf="agencies.length === 0">No agencies found.</div>
+    </div>
+  </div>
+
+  <!-- ══ STEP 2 — SELECT DRAFT ══ -->
+  <div *ngIf="step === 2">
+    <p class="ps-hint">Select a draft to manage its photo slots.</p>
+    <div class="ps-list">
+      <button class="ps-list__item" *ngFor="let draft of drafts" (click)="selectDraft(draft)">
+        <span class="ps-list__name">{{ draft.draftName || 'Unnamed Draft' }}</span>
+        <span class="ps-list__meta">{{ draft.draftId }}</span>
+        <span class="ps-list__arrow">›</span>
+      </button>
+      <div class="ps-empty" *ngIf="drafts.length === 0">This agency has no drafts yet.</div>
+    </div>
+  </div>
+
+  <!-- ══ STEP 3 — VIEW + MANAGE SLOTS ══ -->
+  <div *ngIf="step === 3">
+    <div class="ps-loading" *ngIf="loading">Loading slots…</div>
+
+    <div *ngIf="!loading">
+
+      <!-- ── READ VIEW: saved slots ── -->
+      <div *ngIf="!editMode">
+
+        <!-- Header row -->
+        <div class="ps-saved-header">
+          <div class="ps-saved-title">
+            Photo slots
+            <span class="ps-badge" *ngIf="savedSlots.length > 0">{{ savedSlots.length }}</span>
+          </div>
+          <button class="ps-edit-btn" *ngIf="savedSlots.length > 0" (click)="startEdit()">
+            ✏ Edit
+          </button>
+        </div>
+
+        <!-- Empty state -->
+        <div class="ps-empty-state" *ngIf="savedSlots.length === 0">
+          <div class="ps-empty-state__icon">&#128247;</div>
+          <p class="ps-empty-state__text">No photo slots defined for this draft yet.</p>
+          <button class="ps-btn ps-btn--primary" (click)="startEdit()">+ Define slots</button>
+        </div>
+
+        <!-- Slots grouped by page number -->
+        <div *ngIf="savedSlots.length > 0">
+          <div class="ps-page-group" *ngFor="let group of slotsByPage">
+
+            <div class="ps-page-label">
+              <span class="ps-page-dot"></span>
+              Page {{ group.page }}
+              <span class="ps-page-count">{{ group.slots.length }} slot(s)</span>
+            </div>
+
+            <div class="ps-card-row">
+              <div
+                class="ps-slot-card"
+                *ngFor="let slot of group.slots"
+                [class.ps-slot-card--required]="slot.isRequired">
+                <div class="ps-slot-card__top">
+                  <span class="ps-slot-card__icon">&#128247;</span>
+                  <span class="ps-slot-card__tag" [class.ps-slot-card__tag--req]="slot.isRequired">
+                    {{ slot.isRequired ? 'Required' : 'Optional' }}
+                  </span>
+                </div>
+                <div class="ps-slot-card__name">{{ slot.photoName }}</div>
+                <div class="ps-slot-card__page">Page {{ slot.pageNumber }}</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── EDIT VIEW: form ── -->
+      <div *ngIf="editMode">
+
+        <div class="ps-edit-header">
+          <p class="ps-hint">
+            Editing slots for <strong>{{ selectedDraft?.draftName || 'this draft' }}</strong>.
+            Each slot becomes a photo upload field for the agency at report time.
+          </p>
+        </div>
+
+        <div class="ps-slots">
+          <div class="ps-slots__header">
+            <span class="ps-slots__col ps-slots__col--page">Page No.</span>
+            <span class="ps-slots__col ps-slots__col--name">Photo Name / Label</span>
+            <span class="ps-slots__col ps-slots__col--req">Required</span>
+            <span class="ps-slots__col ps-slots__col--action"></span>
+          </div>
+
+          <div class="ps-slots__row"
+            *ngFor="let slot of slots; let i = index; trackBy: trackByIndex">
+
+            <div class="ps-slots__col ps-slots__col--page">
+              <input class="ps-input ps-input--sm" type="number" min="1"
+                placeholder="e.g. 6" [(ngModel)]="slot.pageNumber" [name]="'page_' + i" />
+            </div>
+
+            <div class="ps-slots__col ps-slots__col--name">
+              <input class="ps-input" type="text"
+                placeholder="e.g. Front view photo" [(ngModel)]="slot.photoName" [name]="'name_' + i" />
+            </div>
+
+            <div class="ps-slots__col ps-slots__col--req">
+              <label class="ps-toggle">
+                <input type="checkbox" [(ngModel)]="slot.isRequired" [name]="'req_' + i" />
+                <span class="ps-toggle__track"><span class="ps-toggle__thumb"></span></span>
+              </label>
+            </div>
+
+            <div class="ps-slots__col ps-slots__col--action">
+              <button class="ps-remove-btn" (click)="removeSlot(i)" title="Remove">✕</button>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="ps-actions">
+          <button class="ps-btn ps-btn--ghost" (click)="addSlot()">+ Add Slot</button>
+          <div style="flex:1"></div>
+          <button class="ps-btn ps-btn--outline" (click)="cancelEdit()">Cancel</button>
+          <button class="ps-btn ps-btn--primary" (click)="saveSlots()" [disabled]="saving">
+            {{ saving ? 'Saving…' : 'Save Slots' }}
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

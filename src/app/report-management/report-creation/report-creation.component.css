@@ -1,0 +1,129 @@
+/* ✅ Bug 5 fixed: box-sizing globally for this component */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* ✅ Bug 3 fixed: width: 100% instead of width: auto */
+.report-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #f8fafc;
+}
+
+/* ✅ Bug 4 fixed: added position: relative so z-index works */
+.upload-section {
+  position: relative;
+  background: #f4f6fb;
+  width: 100%;
+  border-bottom: 1px solid #e2e8f0;
+  z-index: 10;
+}
+
+.content-section {
+  width: 100%;
+}
+
+.form-section {
+  margin: 0 auto;
+  width: 100%;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ✅ Bug 8 fixed: removed margin-top since gap handles spacing */
+.photo-organizer-wrapper {
+  width: 100%;
+}
+
+/* ✅ Bug 2 fixed: removed overflow: hidden and fixed height — use min-height instead */
+.photo-layout-wrapper {
+  width: 100%;
+  min-height: 200px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #1e293b;
+}
+
+.attachments-wrapper {
+  margin: 30px 0;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
+}
+
+app-map-attachments {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* ── CREATE REPORT BUTTON ── */
+.create-report-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding-bottom: 32px; /* ✅ breathing room at page bottom */
+}
+
+.create-report-btn {
+  background: #000000;
+  color: white;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+/* ✅ Bug 1 & 6 fixed: meaningful hover feedback */
+.create-report-btn:hover:not(:disabled) {
+  background: #222222;
+  transform: translateY(-1px);
+}
+
+.create-report-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.create-report-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Spinner animation */
+.loading-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+/* ── Slot Photo Uploader ── */
+app-slot-photo-uploader {
+  display: block;
+  width: 100%;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

@@ -1,0 +1,212 @@
+<div class="media-container">
+  <div class="upload-panel">
+
+    <div class="panel-header">
+      <h3>Attachments</h3>
+
+      <div class="header-actions">
+        <span class="badge">A5 Report Format</span>
+
+        <span class="manual-toggle" (click)="toggleManual()">
+          {{ showManualForm ? '✖ Cancel' : '⌨️ Manual Input' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- MANUAL FORM -->
+    <form
+      *ngIf="showManualForm"
+      class="manual-form-overlay"
+      (ngSubmit)="generateAutoMap(true)"
+    >
+
+      <div class="manual-field">
+        <label>Building / Project Name</label>
+
+        <input
+          type="text"
+          name="buildingName"
+          [(ngModel)]="manualData.buildingName"
+          placeholder="e.g. Nestang Phase 1"
+        />
+      </div>
+
+      <div class="manual-field">
+        <label>Village / Locality</label>
+
+        <input
+          type="text"
+          name="village"
+          [(ngModel)]="manualData.village"
+          placeholder="e.g. Lohgaon"
+        />
+      </div>
+
+      <div class="manual-field">
+        <label>District</label>
+
+        <input
+          type="text"
+          name="district"
+          [(ngModel)]="manualData.district"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="btn-manual-submit"
+        [disabled]="isGeneratingMap"
+      >
+        {{ isGeneratingMap ? 'Searching...' : 'Fetch Satellite Map' }}
+      </button>
+
+    </form>
+
+    <p class="hint">
+      Click to upload or <b>Paste (Ctrl+V)</b>
+    </p>
+
+    <div class="upload-grid">
+
+      <!-- RECKONER -->
+      <div class="upload-slot" [class.active]="reckonerPhoto">
+
+        <label>
+          <i class="icon">📄</i> Ready Reckoner
+        </label>
+
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onFileSelected($event, 'reckoner')"
+        />
+
+        <button
+          *ngIf="reckonerPhoto"
+          (click)="removePhoto('reckoner')"
+          class="btn-remove"
+        >
+          Remove
+        </button>
+
+      </div>
+
+      <!-- LOCATION MAP -->
+      <div class="upload-slot" [class.active]="locationMapPhoto">
+
+        <label>
+          <i class="icon">📍</i> Location Map
+        </label>
+
+        <div class="button-group">
+
+          <input
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event, 'location')"
+          />
+
+          <button
+            type="button"
+            class="btn-auto"
+            (click)="generateAutoMap(false)"
+            [disabled]="isGeneratingMap"
+          >
+
+            <span *ngIf="!isGeneratingMap">
+              ⚡ Auto
+            </span>
+
+            <span *ngIf="isGeneratingMap" class="mini-spinner">
+            </span>
+
+          </button>
+
+        </div>
+
+        <button
+          *ngIf="locationMapPhoto"
+          (click)="removePhoto('location')"
+          class="btn-remove"
+        >
+          Remove
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- PREVIEW PANEL -->
+  <div class="preview-panel">
+
+    <div class="preview-card">
+
+      <div class="page-header">
+        Internal Attachment Preview
+      </div>
+
+      <div class="page-content">
+
+        <!-- RECKONER PREVIEW -->
+        <div
+          class="preview-section"
+          [class.empty]="!reckonerPhoto"
+        >
+
+          <div
+            *ngIf="!reckonerPhoto"
+            class="placeholder"
+          >
+            <span class="pl-icon">🖼️</span>
+            <p>Reckoner Image</p>
+          </div>
+
+          <img
+            *ngIf="reckonerPhoto"
+            [src]="reckonerPhoto"
+          />
+
+        </div>
+
+        <!-- MAP PREVIEW -->
+        <div
+          class="preview-section"
+          [class.empty]="!locationMapPhoto"
+        >
+
+          <div
+            *ngIf="isGeneratingMap"
+            class="map-loading-overlay"
+          >
+            <div class="spinner"></div>
+            <p>Fetching Satellite View...</p>
+          </div>
+
+          <div
+            *ngIf="!locationMapPhoto && !isGeneratingMap"
+            class="placeholder"
+          >
+            <span class="pl-icon">🗺️</span>
+            <p>Location Map</p>
+          </div>
+
+          <img
+            *ngIf="locationMapPhoto"
+            [src]="locationMapPhoto"
+          />
+
+        </div>
+
+      </div>
+
+      <div class="page-footer">
+        ValoraAI Document Engine
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

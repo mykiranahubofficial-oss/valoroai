@@ -1,0 +1,63 @@
+<main class="preview-workspace">
+
+  <!-- CONTROL PANEL (TOP CENTER) -->
+  <div class="control-panel">
+
+    <ng-container *ngIf="photosPerPage$ | async as perPage">
+
+      <button
+        [class.active]="perPage === 6"
+        (click)="changeLayout(6)">
+        6 Photos
+      </button>
+
+    </ng-container>
+
+  </div>
+
+  <!-- PAGE PREVIEW AREA -->
+  <div class="pages-container">
+
+    <ng-container *ngIf="pages$ | async as pages">
+      <ng-container *ngIf="photosPerPage$ | async as perPage">
+
+        <div class="a4-page" *ngFor="let page of pages; let i=index">
+
+          <div class="page-header">
+            Page {{i+1}}
+          </div>
+
+          <div
+            class="photo-grid-a4"
+            [ngClass]="perPage === 4 ? 'grid-4' : 'grid-6'"
+          >
+
+            <div
+              class="photo-slot"
+              *ngFor="let slot of [].constructor(perPage); let idx=index"
+            >
+
+              <div class="slot-content" *ngIf="page && page[idx]">
+                <img [src]="page[idx].preview"/>
+              </div>
+
+              <div class="slot-placeholder" *ngIf="!page || !page[idx]">
+                Slot {{idx+1}}
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="page-footer">
+            Site Visit Report - Page {{i+1}}
+          </div>
+
+        </div>
+
+      </ng-container>
+    </ng-container>
+
+  </div>
+
+</main>

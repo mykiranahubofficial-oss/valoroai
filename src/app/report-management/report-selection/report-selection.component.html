@@ -1,0 +1,207 @@
+<div class="rs-page">
+
+  <!-- ── Top bar ── -->
+  <div class="rs-topbar">
+    <div class="rs-topbar__agency">{{ agencyName || 'Agency' }}</div>
+    <div class="rs-topbar__sep"></div>
+    <div class="rs-topbar__label">Select a draft to create your report</div>
+  </div>
+
+  <!-- ── Loading ── -->
+  <div class="rs-loading" *ngIf="loading">
+    <div class="rs-spinner"></div>
+    <span>Loading drafts…</span>
+  </div>
+
+  <!-- ── Empty state ── -->
+  <div class="rs-empty" *ngIf="!loading && drafts.length === 0">
+    <div class="rs-empty__icon">&#128196;</div>
+    <p>No drafts available for your account.</p>
+    <p class="rs-empty__sub">Contact your admin to set up a draft.</p>
+  </div>
+
+  <!-- ── Main layout ── -->
+  <div class="rs-layout" *ngIf="!loading && drafts.length > 0">
+
+    <!-- LEFT: Draft cards list -->
+    <div class="rs-drafts">
+
+      <div class="rs-section-label">Available Drafts</div>
+
+      <div
+        class="rs-draft-card"
+        *ngFor="let draft of drafts"
+        [class.rs-draft-card--selected]="draft.draftId === selectedDraftId"
+        (click)="selectDraft(draft.draftId)">
+
+        <!-- Selection indicator -->
+        <div class="rs-draft-card__radio">
+          <div class="rs-radio" [class.rs-radio--on]="draft.draftId === selectedDraftId"></div>
+        </div>
+
+        <!-- Draft info -->
+        <div class="rs-draft-card__body">
+
+          <div class="rs-draft-card__name">
+            {{ draft.draftName || 'Unnamed Draft' }}
+          </div>
+
+          <!-- Tables summary -->
+          <div class="rs-draft-card__row" *ngIf="draft.tables?.length">
+            <span class="rs-chip rs-chip--table">
+              &#9783; {{ draft.tables.length }} table{{ draft.tables.length > 1 ? 's' : '' }}
+            </span>
+            <span class="rs-tag" *ngFor="let t of draft.tables">
+              {{ t.tableName }}
+            </span>
+          </div>
+          <div class="rs-draft-card__row rs-draft-card__row--muted" *ngIf="!draft.tables?.length">
+            No tables defined
+          </div>
+
+          <!-- Photo slots summary -->
+          <div class="rs-draft-card__row" *ngIf="draft.photoSlots?.length">
+            <span class="rs-chip rs-chip--photo">
+              &#128247; {{ draft.photoSlots.length }} photo slot{{ draft.photoSlots.length > 1 ? 's' : '' }}
+            </span>
+            <span class="rs-chip rs-chip--req" *ngIf="requiredSlots(draft).length">
+              {{ requiredSlots(draft).length }} required
+            </span>
+            <span class="rs-chip rs-chip--opt" *ngIf="optionalSlots(draft).length">
+              {{ optionalSlots(draft).length }} optional
+            </span>
+          </div>
+          <div class="rs-draft-card__row rs-draft-card__row--muted" *ngIf="!draft.photoSlots?.length">
+            No photo slots defined
+          </div>
+
+        </div>
+
+        <!-- Selected checkmark -->
+        <div class="rs-draft-card__check" *ngIf="draft.draftId === selectedDraftId">&#10003;</div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT: Detail panel -->
+    <div class="rs-detail">
+
+      <!-- Nothing selected yet -->
+      <div class="rs-detail__empty" *ngIf="!selectedDraft">
+        <div class="rs-detail__empty-icon">&#8592;</div>
+        <p>Select a draft to see its details</p>
+      </div>
+
+      <!-- Detail content -->
+      <div *ngIf="selectedDraft">
+
+        <!-- ── Header block ── -->
+        <div class="rs-detail__header">
+          <div class="rs-detail__eyebrow">Selected Draft</div>
+          <div class="rs-detail__name">{{ selectedDraft.draftName || 'Unnamed Draft' }}</div>
+
+          <!-- Summary stats bar -->
+          <div class="rs-detail__stats">
+            <div class="rs-stat">
+              <div class="rs-stat__value">{{ selectedDraft.tables?.length ?? 0 }}</div>
+              <div class="rs-stat__label">Tables</div>
+            </div>
+            <div class="rs-stat">
+              <div class="rs-stat__value">{{ selectedDraft.photoSlots?.length ?? 0 }}</div>
+              <div class="rs-stat__label">Photo Slots</div>
+            </div>
+            <div class="rs-stat">
+              <div class="rs-stat__value">{{ requiredSlots(selectedDraft).length }}</div>
+              <div class="rs-stat__label">Required</div>
+            </div>
+            <div class="rs-stat">
+              <div class="rs-stat__value">{{ optionalSlots(selectedDraft).length }}</div>
+              <div class="rs-stat__label">Optional</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rs-divider"></div>
+
+        <!-- ── Tables section ── -->
+        <div class="rs-detail__section">
+          <div class="rs-detail__section-title">
+            <div class="rs-detail__section-dot"></div>
+            <span>Tables</span>
+            <span class="rs-badge">{{ selectedDraft.tables?.length ?? 0 }}</span>
+          </div>
+
+          <div class="rs-table-list" *ngIf="selectedDraft.tables?.length">
+            <div class="rs-table-row" *ngFor="let t of selectedDraft.tables">
+              <div class="rs-table-row__name">{{ t.tableName }}</div>
+              <div class="rs-table-row__meta">
+                {{ t.columnHeaders?.length ?? 0 }} col{{ (t.columnHeaders?.length ?? 0) !== 1 ? 's' : '' }}
+                &nbsp;&middot;&nbsp;
+                {{ t.rowHeaders?.length ?? 0 }} row{{ (t.rowHeaders?.length ?? 0) !== 1 ? 's' : '' }}
+              </div>
+            </div>
+          </div>
+          <div class="rs-detail__none" *ngIf="!selectedDraft.tables?.length">
+            No tables in this draft.
+          </div>
+        </div>
+
+        <div class="rs-divider"></div>
+
+        <!-- ── Photo slots section ── -->
+        <div class="rs-detail__section">
+          <div class="rs-detail__section-title">
+            <div class="rs-detail__section-dot"></div>
+            <span>Photo Slots</span>
+            <span class="rs-badge">{{ selectedDraft.photoSlots?.length ?? 0 }}</span>
+          </div>
+
+          <div *ngIf="selectedDraft.photoSlots?.length">
+            <div class="rs-page-group" *ngFor="let page of uniquePages(selectedDraft)">
+              <div class="rs-page-label">
+                <div class="rs-page-label__line"></div>
+                <span>Page {{ page }}</span>
+                <div class="rs-page-label__line"></div>
+              </div>
+              <div class="rs-slot-list">
+                <div
+                  class="rs-slot-item"
+                  *ngFor="let slot of selectedDraft.photoSlots | slotsByPage:page"
+                  [class.rs-slot-item--required]="slot.isRequired">
+                  <span class="rs-slot-item__name">{{ slot.photoName }}</span>
+                  <span
+                    class="rs-slot-item__badge"
+                    [class.rs-slot-item__badge--req]="slot.isRequired">
+                    {{ slot.isRequired ? 'Required' : 'Optional' }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rs-detail__none" *ngIf="!selectedDraft.photoSlots?.length">
+            No photo slots in this draft.
+          </div>
+        </div>
+
+        <!-- ── Proceed buttons ── -->
+        <div class="rs-proceed">
+          <button
+            class="rs-proceed__btn"
+            (click)="selectFlatReport()"
+            [disabled]="proceeding">
+            {{ proceeding ? 'Loading…' : 'Create Flat Report with this Draft' }}
+            <span *ngIf="!proceeding">&#8594;</span>
+          </button>
+          <button class="rs-proceed__btn rs-proceed__btn--land" (click)="selectLandReport()">
+            Create Land Report
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

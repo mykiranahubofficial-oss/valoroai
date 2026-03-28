@@ -1,0 +1,230 @@
+<div class="lb-wrapper">
+
+  <!-- 🧪 Dev autofill button — remove before production -->
+  <div class="lb-autofill-bar">
+    <button class="lb-autofill-btn" (click)="autofill()">
+      🧪 Autofill test data
+    </button>
+  </div>
+
+  <!-- XIV(i) Circle Rate -->
+  <div class="lb-section">
+    <div class="lb-section-header">
+      <span class="lb-dot lb-dot--blue"></span>
+      <span class="lb-title">XIV (i) — Valuation as per circle rate</span>
+    </div>
+    <div class="lb-body">
+      <div class="lb-grid">
+        <div class="lb-field">
+          <label>Guideline land rate (per Sq.mt)</label>
+          <div class="lb-input-wrap">
+            <span class="lb-prefix">Rs.</span>
+            <input type="number" [(ngModel)]="circleRate" />
+            <span class="lb-suffix">/ Sq.mt</span>
+          </div>
+        </div>
+        <div class="lb-field">
+          <label>Total land area (Sq.mt)</label>
+          <div class="lb-input-wrap">
+            <input type="number" [(ngModel)]="landArea" />
+            <span class="lb-suffix">Sq.mt</span>
+          </div>
+        </div>
+        <div class="lb-field">
+          <label>Part B — Building value (Rs.)</label>
+          <div class="lb-input-wrap">
+            <span class="lb-prefix">Rs.</span>
+            <input type="number" [(ngModel)]="circlePartB" />
+          </div>
+        </div>
+        <div class="lb-field">
+          <label>Part C — Other amenities (Rs.)</label>
+          <div class="lb-input-wrap">
+            <span class="lb-prefix">Rs.</span>
+            <input type="number" [(ngModel)]="circlePartC" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Auto calc display -->
+      <div class="lb-calc-box">
+        <p>= ({{ fmt(landArea) }} × Rs. {{ fmt(circleRate) }})
+           + Rs. {{ fmt(circlePartB) }}
+           + Rs. {{ fmt(circlePartC) }}</p>
+        <p class="lb-calc-result">
+          Circle rate valuation: Rs. {{ fmt(circleTotalValue) }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- XIV(ii) Market Rate -->
+  <div class="lb-section">
+    <div class="lb-section-header">
+      <span class="lb-dot lb-dot--green"></span>
+      <span class="lb-title">XIV (ii) — Valuation as per market rate</span>
+    </div>
+    <div class="lb-body">
+
+      <!-- Part A -->
+      <p class="lb-part-label">Part A — Valuation of land</p>
+      <div class="lb-grid">
+        <div class="lb-field">
+          <label>Total plot area (Sq.mt)</label>
+          <div class="lb-input-wrap">
+            <input type="number" [(ngModel)]="plotArea" />
+            <span class="lb-suffix">Sq.mt</span>
+          </div>
+        </div>
+        <div class="lb-field">
+          <label>Adopted rate (Sq.mt)</label>
+          <div class="lb-input-wrap">
+            <span class="lb-prefix">Rs.</span>
+            <input type="number" [(ngModel)]="adoptedRate" />
+            <span class="lb-suffix">/ Sq.mt</span>
+          </div>
+        </div>
+        <div class="lb-field full">
+          <label>Reason for adopted rate</label>
+          <input type="text" [(ngModel)]="adoptedReason"
+                 placeholder="e.g. due to big size of property" />
+        </div>
+      </div>
+      <div class="lb-calc-box">
+        <p class="lb-calc-result">
+          Part A: Rs. {{ fmt(partAValue) }}
+          ({{ fmt(plotArea) }} × Rs. {{ fmt(adoptedRate) }})
+        </p>
+      </div>
+
+      <!-- Part B table -->
+      <p class="lb-part-label" style="margin-top:1rem">Part B — Valuation of building</p>
+      <table class="lb-table">
+        <thead>
+          <tr>
+            <th>S.N.</th>
+            <th>Particulars</th>
+            <th>Plinth area (Sq.mt)</th>
+            <th>Replacement rate (Rs.)</th>
+            <th>Replacement value (Rs.)</th>
+            <th>Depreciation (Rs.)</th>
+            <th>Net value (Rs.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of partBRows; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td><input type="text"   [(ngModel)]="row.particulars" /></td>
+            <td><input type="number" [(ngModel)]="row.plinthArea" /></td>
+            <td><input type="number" [(ngModel)]="row.replacementRate" /></td>
+            <td><input type="number" [(ngModel)]="row.replacementValue" /></td>
+            <td><input type="number" [(ngModel)]="row.depreciation" /></td>
+            <td><input type="number" [(ngModel)]="row.netValue" /></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6" style="text-align:right">Total value of building</td>
+            <td>Rs. {{ fmt(partBTotal) }}</td>
+          </tr>
+        </tfoot>
+      </table>
+      <button class="lb-add-btn" (click)="addPartBRow()">+ Add row</button>
+
+      <!-- Part C table -->
+      <p class="lb-part-label" style="margin-top:1rem">Part C — Other amenities / extra items</p>
+      <table class="lb-table">
+        <thead>
+          <tr>
+            <th>S.N.</th>
+            <th>Particulars</th>
+            <th>Quantity</th>
+            <th>Replacement rate (Rs.)</th>
+            <th>Replacement cost (Rs.)</th>
+            <th>Depreciation</th>
+            <th>Net value (Rs.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of partCRows; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td><input type="text"   [(ngModel)]="row.particulars" /></td>
+            <td><input type="number" [(ngModel)]="row.quantity" /></td>
+            <td><input type="number" [(ngModel)]="row.replacementRate" /></td>
+            <td><input type="number" [(ngModel)]="row.replacementCost" /></td>
+            <td><input type="number" [(ngModel)]="row.depreciation" /></td>
+            <td><input type="number" [(ngModel)]="row.netValue" /></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6" style="text-align:right">Total</td>
+            <td>Rs. {{ fmt(partCTotal) }}</td>
+          </tr>
+        </tfoot>
+      </table>
+      <button class="lb-add-btn" (click)="addPartCRow()">+ Add row</button>
+
+      <div class="lb-calc-box" style="margin-top:1rem">
+        <p>= Part A (Rs. {{ fmt(partAValue) }})
+           + Part B (Rs. {{ fmt(partBTotal) }})
+           + Part C (Rs. {{ fmt(partCTotal) }})</p>
+        <p class="lb-calc-result">
+          Market rate valuation: Rs. {{ fmt(marketTotalValue) }}
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Final Summary -->
+  <div class="lb-section">
+    <div class="lb-section-header">
+      <span class="lb-dot lb-dot--purple"></span>
+      <span class="lb-title">Final valuation summary</span>
+    </div>
+    <div class="lb-body">
+      <div class="lb-final-grid">
+        <div class="lb-final-card lb-final-card--primary">
+          <span class="lb-final-label">Fair market value</span>
+          <span class="lb-final-value">Rs. {{ fmt(marketTotalValue) }}</span>
+        </div>
+        <div class="lb-final-card">
+          <span class="lb-final-label">Circle rate value</span>
+          <span class="lb-final-value">Rs. {{ fmt(circleTotalValue) }}</span>
+        </div>
+        <div class="lb-final-card">
+          <span class="lb-final-label">Realizable value</span>
+          <div class="lb-input-wrap">
+            <span class="lb-prefix">Rs.</span>
+            <input type="number" [(ngModel)]="realizableValue" />
+          </div>
+        </div>
+        <div class="lb-final-card">
+          <span class="lb-final-label">Distress sale value</span>
+          <div class="lb-input-wrap">
+            <span class="lb-prefix">Rs.</span>
+            <input type="number" [(ngModel)]="distressValue" />
+          </div>
+        </div>
+        <div class="lb-final-card">
+          <span class="lb-final-label">Insurable value</span>
+          <div class="lb-input-wrap">
+            <span class="lb-prefix">Rs.</span>
+            <input type="number" [(ngModel)]="insurableValue" />
+          </div>
+        </div>
+        <div class="lb-final-card">
+          <span class="lb-final-label">Rental value</span>
+          <div class="lb-input-wrap">
+            <span class="lb-prefix">Rs.</span>
+            <input type="number" [(ngModel)]="rentalValue" />
+            <span class="lb-suffix">/ mo</span>
+          </div>
+        </div>
+      </div>
+      <button class="lb-save-btn" (click)="saveValuation()">Save valuation</button>
+    </div>
+  </div>
+
+</div>

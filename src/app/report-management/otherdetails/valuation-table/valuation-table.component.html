@@ -1,0 +1,102 @@
+<div class="vt-wrapper">
+  <div class="vt-title">Valuation Details</div>
+
+  <div class="vt-scroll">
+    <table class="vt-table">
+
+      <thead>
+        <tr>
+          <!-- Sr. No. -->
+          <th class="col-sr">{{ columnHeaders[0] || 'Sr. No.' }}</th>
+
+          <!-- Description -->
+          <th class="col-desc">{{ columnHeaders[1] || 'Description' }}</th>
+
+          <!-- ✅ Dynamic middle columns (editable) -->
+          <th
+            *ngFor="let col of dataCols; let ci = index; trackBy: trackByColIndex"
+            class="col-data"
+          >
+            {{ col }}
+          </th>
+
+          <!-- ✅ Last column = Estimated Value (always) -->
+          <th class="col-est">
+            {{ columnHeaders[columnHeaders.length - 1] || 'Estimated Value (Rs.)' }}
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let row of rows; trackBy: trackByIndex" class="vt-row">
+
+          <!-- Sr. No. -->
+          <td class="col-sr td-center">{{ row.srNo }}.</td>
+
+          <!-- Description — read only from rowHeaders -->
+          <td class="col-desc td-desc">{{ row.description || '—' }}</td>
+
+          <!-- ✅ Dynamic editable cells -->
+          <td
+            *ngFor="let col of dataCols; let ci = index; trackBy: trackByColIndex"
+            class="col-data"
+          >
+            <textarea
+              class="vt-input vt-input--textarea"
+              [(ngModel)]="row.cells[ci]"
+              [name]="'cell_' + row.srNo + '_' + ci"
+              (ngModelChange)="onAnyChange()"
+              (input)="autoGrow($event)"
+              placeholder="--"
+            ></textarea>
+          </td>
+
+          <!-- ✅ Estimated Value — auto calculated, read only -->
+          <!-- ✅ Estimated Value — auto calculated, read only -->
+<td class="col-est">
+  <textarea
+    class="vt-input vt-input--textarea vt-input--readonly"
+    [ngModel]="getEstimatedValue(row)"
+    [name]="'est_' + row.srNo"
+    placeholder="--"
+    readonly
+  ></textarea>
+</td>
+
+        </tr>
+      </tbody>
+
+      <tfoot>
+        <tr class="vt-footer-row">
+          <td colspan="2" class="td-footer-label">Total</td>
+          <td [colSpan]="dataCols.length"></td>
+          <td class="td-footer-value">
+            <input class="vt-input vt-input--total" type="text"
+              [(ngModel)]="totalValue" name="totalValue" placeholder="--" readonly/>
+          </td>
+        </tr>
+
+        <tr class="vt-footer-row">
+          <td colspan="2" class="td-footer-label">Say</td>
+          <td [colSpan]="dataCols.length"></td>
+          <td class="td-footer-value">
+            <input class="vt-input vt-input--total" type="text"
+              [(ngModel)]="sayValue" name="sayValue" placeholder="--" readonly/>
+          </td>
+        </tr>
+
+        <tr class="vt-words-row">
+          <td [colSpan]="columnHeaders.length" class="td-words">
+            <span *ngIf="sayNumber">{{ sayNumber | amountInWords }}</span>
+            <span *ngIf="!sayNumber" class="td-words--placeholder">
+              Amount in words will appear here
+            </span>
+          </td>
+        </tr>
+      </tfoot>
+
+    </table>
+  </div>
+
+  <button class="vt-save-btn" (click)="saveTable()">Save</button>
+</div>

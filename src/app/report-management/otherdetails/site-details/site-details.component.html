@@ -1,0 +1,51 @@
+<div class="wrapper">
+  <div class="section-title">Site & Area Details</div>
+
+  <div class="grid-2">
+
+    <div class="field">
+    
+<label>13A — Extent of the Site</label>
+    <textarea
+  [(ngModel)]="formData.extentSite"
+  cdkTextareaAutosize
+  cdkAutosizeMinRows="1"
+  cdkAutosizeMaxRows="12"
+></textarea>
+    </div>
+
+    <div class="field">
+      <label>
+        13B — Extent Considered for Valuation
+        <span class="label-note">(least of 13A & 13B)</span>
+      </label>
+      <textarea
+        [(ngModel)]="formData.extentValuation"
+  cdkTextareaAutosize
+  cdkAutosizeMinRows="1"
+  cdkAutosizeMaxRows="12"
+      ></textarea>
+    </div>
+
+    <div class="field">
+      <label>Plinth Area of the Flat</label>
+      <textarea
+        [(ngModel)]="formData.plinthArea"
+        cdkTextareaAutosize
+  cdkAutosizeMinRows="1"
+  cdkAutosizeMaxRows="12"
+      ></textarea>
+    </div>
+
+    <div class="field">
+      <label>Carpet Area of the Flat</label>
+      <textarea
+        [(ngModel)]="formData.carpetArea"
+        cdkTextareaAutosize
+  cdkAutosizeMinRows="1"
+  cdkAutosizeMaxRows="12"
+      ></textarea>
+    </div>
+
+  </div>
+</div>

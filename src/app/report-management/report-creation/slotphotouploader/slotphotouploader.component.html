@@ -1,0 +1,58 @@
+<div class="spu-wrap" *ngIf="slots.length > 0">
+
+  <div class="spu-heading">
+    <span class="spu-heading__icon">&#128247;</span>
+    <div>
+      <div class="spu-heading__title">Report Photos</div>
+      <div class="spu-heading__sub">
+        Upload photos for each section as defined in your draft
+      </div>
+    </div>
+  </div>
+
+  <!-- ✅ ONE row — no page group loop -->
+  <div class="spu-slots-row">
+
+    <div class="spu-slot" *ngFor="let slot of slots" [class.spu-slot--filled]="hasFile(slot)"
+      [class.spu-slot--required]="slot.isRequired">
+
+      <div class="spu-slot__req-bar" *ngIf="slot.isRequired"></div>
+
+      <div class="spu-dropzone" [class.spu-dropzone--filled]="hasFile(slot)" (click)="fileInput.click()">
+
+        <img *ngIf="previews[slot.photoName]" [src]="previews[slot.photoName]" class="spu-preview" alt="preview" />
+
+        <div class="spu-empty" *ngIf="!previews[slot.photoName]">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="3" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <path d="M21 15l-5-5L5 21" />
+          </svg>
+          <div class="spu-empty__text">Click to upload</div>
+        </div>
+
+        <input #fileInput type="file" accept="image/*" style="display:none" (change)="onFileSelected($event, slot)" />
+      </div>
+
+      <button class="spu-remove" *ngIf="hasFile(slot)" (click)="removePhoto(slot.photoName); $event.stopPropagation()"
+        title="Remove">
+        &#10005;
+      </button>
+      <div class="spu-slot__info">
+        <div class="spu-slot__name">{{ formatLabel(slot.photoName) }}</div>
+        <div class="spu-slot__page">Page {{ slot.pageNumber }}</div>
+        <span class="spu-slot__badge" [class.spu-slot__badge--req]="slot.isRequired">
+          {{ slot.isRequired ? 'Required' : 'Optional' }}
+        </span>
+      </div>
+
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="spu-none" *ngIf="slots.length === 0">
+  No additional photo slots defined for this draft.
+</div>

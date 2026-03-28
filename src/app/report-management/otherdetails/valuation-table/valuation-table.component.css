@@ -1,0 +1,174 @@
+/* =========================
+   WRAPPER
+========================= */
+.vt-wrapper {
+  padding: 18px 22px;
+  background: #fff;
+  font-family: 'Inter', sans-serif;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+}
+
+.vt-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #111;
+  border-bottom: 1px solid #d9d9d9;
+  padding-bottom: 6px;
+  margin-bottom: 14px;
+}
+
+/* =========================
+   TABLE
+========================= */
+.vt-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  table-layout: fixed;
+}
+/* HEADER */
+
+thead th {
+  border: 1px solid #dcdcdc;
+  padding: 8px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: #f4f4f4;
+  color: #222;
+}
+
+.vt-input--textarea {
+  resize: none;
+  overflow: hidden;
+  min-height: 26px;
+  line-height: 1.4;
+}
+.vt-input--textarea::-webkit-scrollbar {
+  display: none;
+}
+/* BODY */
+
+.vt-row td {
+  border: 1px solid #e6e6e6;
+  padding: 6px 8px;
+  vertical-align: top;
+}
+.td-center {
+  text-align: center;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.td-desc {
+  font-weight: 500;
+  color: #222;
+  line-height: 1.4;
+}
+
+.col-sr {
+  width: 6%;
+}
+
+.col-desc {
+  width: 12%;
+}
+
+.col-qty {
+  width: 20%;
+}
+
+.col-rate {
+  width: 20%;
+}
+
+.col-est {
+  width: 22%;
+}
+
+/* =========================
+   INPUT
+========================= */
+.vt-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #cfcfcf;
+  padding: 4px 2px;
+  font-size: 13px;
+  background: transparent;
+  outline: none;
+  font-family: inherit;
+}
+
+.vt-input:focus {
+  border-bottom: 1px solid #222;
+}
+
+.vt-input--value {
+  text-align: right;
+}
+
+/* =========================
+   FOOTER
+========================= */
+.vt-footer-row td {
+  border: 1px solid #dcdcdc;
+  padding: 6px 8px;
+  background: #fafafa;
+}
+
+.td-footer-label {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.td-footer-value {
+  text-align: right;
+}
+
+.vt-input--total {
+  font-weight: 700;
+  border-bottom: 1px solid #222;
+  text-align: right;
+}
+
+/* =========================
+   AMOUNT WORDS
+========================= */
+.vt-words-row td {
+  border: 1px solid #dcdcdc;
+}
+
+.td-words {
+  text-align: center;
+  padding: 8px;
+  font-size: 12.5px;
+  font-style: italic;
+  color: #333;
+  background: #fafafa;
+}
+
+.td-words--placeholder {
+  color: #aaa;
+}
+.vt-actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:16px;
+}
+
+.vt-save-btn{
+  background:#2563eb;
+  color:white;
+  border:none;
+  padding:10px 18px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:500;
+}
+
+.vt-save-btn:hover{
+  background:#1d4ed8;
+}

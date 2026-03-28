@@ -1,0 +1,148 @@
+<div class="agency-container">
+
+  <h2 class="page-title">Agencies</h2>
+
+  <div *ngIf="agencies.length === 0" class="empty-state">
+    No agencies found.
+  </div>
+
+  <!-- Upload Section -->
+  <div class="upload-section">
+    <h3>Upload Report</h3>
+    <div class="upload-box">
+      <input type="file" (change)="onFileSelected($event)" />
+      <span *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</span>
+      <button class="upload-btn" (click)="uploadReport()" [disabled]="uploading">
+        {{ uploading ? 'Uploading...' : 'Upload' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Agency Cards -->
+  <div class="agency-grid">
+    <div
+      *ngFor="let agency of agencies; trackBy: trackByUserId"
+      class="agency-card"
+    >
+      <!-- ── Agency Info ── -->
+      <div class="agency-header">
+        <h3>{{ agency.agencyName }}</h3>
+        <span class="draft-count-badge">
+          {{ agency.drafts?.length || 0 }} draft(s)
+        </span>
+      </div>
+
+      <p><strong>Owner:</strong>   {{ agency.ownerName   || '—' }}</p>
+      <p><strong>User ID:</strong> {{ agency.userId }}</p>
+      <p><strong>Email:</strong>   {{ agency.email        || '—' }}</p>
+
+      <!-- ── Drafts List ── -->
+<div class="drafts-section" *ngIf="(agency.drafts?.length ?? 0) > 0">
+        <h4 class="drafts-title">Drafts</h4>
+
+        <div
+          class="draft-item"
+          *ngFor="let draft of agency.drafts"
+        >
+          <div class="draft-item-header">
+            <span class="draft-name">📋 {{ draft.draftName }}</span>
+            <span class="draft-meta">
+              {{ draft.tableCount }} table(s) · {{ draft.reportCount }} report(s)
+            </span>
+          </div>
+
+          <!-- Template link -->
+          <!-- ✅ Full fixed template link section -->
+<div class="draft-template" *ngIf="draft.draftLink?.templateUrl">
+  <span class="template-icon">
+    {{ draft.draftLink.templateType === 'pdf' ? '📄'
+     : draft.draftLink.templateType === 'docx' ? '📝' : '📊' }}
+  </span>
+  <a [href]="draft.draftLink.templateUrl" 
+     target="_blank" 
+     class="template-link">{{ draft.draftLink.templateName }}</a>
+</div>
+
+          <!-- Tables list -->
+<div class="tables-list" *ngIf="(draft.tables?.length ?? 0) > 0">
+            <span
+              class="table-tag"
+              *ngFor="let table of draft.tables"
+            >
+              {{ table.tableName }}
+            </span>
+          </div>
+
+          <!-- Latest report -->
+          <div class="latest-report" *ngIf="draft.latestReport">
+            <span class="report-status"
+              [class.status-generated]="draft.latestReport.status === 'generated'"
+              [class.status-finalized]="draft.latestReport.status === 'finalized'"
+              [class.status-draft]="draft.latestReport.status === 'draft'"
+            >
+              {{ draft.latestReport.status | uppercase }}
+            </span>
+            <span class="report-name">{{ draft.latestReport.reportName }}</span>
+          </div>
+
+          <!-- ✅ Add Table button per draft -->
+          <button
+            class="add-table-btn"
+            (click)="openTableBuilder(agency, draft)"
+          >
+            + Add Table
+          </button>
+
+        </div>
+      </div>
+
+      <!-- No drafts yet -->
+      <div class="no-drafts" *ngIf="!agency.drafts?.length">
+        <span>No drafts yet</span>
+      </div>
+
+      <!-- ── Card Actions ── -->
+      <div class="card-actions">
+        <button class="edit-btn"  (click)="openEditPopup(agency)">Edit</button>
+        <button class="draft-btn" (click)="openDraftBuilder(agency)">+ Draft</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Edit Popup -->
+  <div class="popup-backdrop" *ngIf="showEditPopup">
+    <div class="popup-card">
+      <h3>Edit Agency</h3>
+      <div class="form-group">
+        <label>Agency Name</label>
+        <input [(ngModel)]="editForm.agencyName" />
+      </div>
+      <div class="form-group">
+        <label>Owner Name</label>
+        <input [(ngModel)]="editForm.ownerName" />
+      </div>
+      <div class="popup-actions">
+        <button class="save-btn"   (click)="saveEdit()">Update</button>
+        <button class="cancel-btn" (click)="closeEditPopup()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Draft Builder -->
+  <app-draft-builder
+    [visible]="showDraftBuilder"
+    [userId]="draftBuilderUserId"
+    (draftCreated)="onDraftCreated($event)"
+    (closed)="showDraftBuilder = false"
+  />
+
+  <!-- Table Builder -->
+  <app-table-builder
+    [visible]="showTableBuilder"
+    [userId]="tableBuilderUserId"
+    [draftId]="tableBuilderDraftId"
+    (closed)="onTableBuilderClosed()"
+  />
+
+</div>

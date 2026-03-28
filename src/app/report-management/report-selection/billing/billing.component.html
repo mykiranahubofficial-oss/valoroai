@@ -1,0 +1,135 @@
+<!-- C:\Users\Prashant\Desktop\valorademo\src\app\billing\billing.component.html -->
+
+<div class="billing-wrapper">
+  
+  <!-- Header -->
+  <header class="billing-header">
+    <h1>💳 Billing & Subscription</h1>
+    <p class="subtitle">Manage your plan for <strong>{{ agencyName }}</strong></p>
+  </header>
+
+  <!-- Loading State -->
+  <div class="loading" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Loading billing information...</p>
+  </div>
+
+  <!-- Main Content -->
+  <div class="billing-content" *ngIf="!loading && currentPlan">
+    
+    <!-- Current Plan Card -->
+    <section class="card current-plan">
+      <div class="card-header">
+        <h2>✨ Current Plan</h2>
+        <span class="badge active">Active</span>
+      </div>
+      
+      <div class="plan-details">
+        <h3>{{ currentPlan.planName }}</h3>
+        <div class="price">
+          <span class="amount">{{ getCurrency(currentPlan.price) }}</span>
+          <span class="cycle">/{{ currentPlan.billingCycle }}</span>
+        </div>
+        
+        <p class="next-billing" *ngIf="currentPlan.nextBillingDate">
+          📅 Next billing: <strong>{{ formatDate(currentPlan.nextBillingDate) }}</strong>
+        </p>
+
+        <h4>Includes:</h4>
+        <ul class="features">
+          <li *ngFor="let feature of currentPlan.features">
+            ✓ {{ feature }}
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Available Plans -->
+    <section class="card upgrade-section">
+      <div class="card-header">
+        <h2>🚀 Upgrade or Change Plan</h2>
+      </div>
+      
+      <div class="plans-grid">
+        <div 
+          class="plan-card" 
+          *ngFor="let plan of availablePlans"
+          [class.current]="isCurrentPlan(plan.planId)"
+          [class.popular]="plan.popular">
+          
+          <div class="plan-badge" *ngIf="plan.popular">Most Popular</div>
+          
+          <h3>{{ plan.planName }}</h3>
+          <div class="plan-price">
+            <span class="amount">{{ getCurrency(plan.price) }}</span>
+            <span class="cycle">/{{ plan.billingCycle }}</span>
+          </div>
+          
+          <ul class="plan-features">
+            <li *ngFor="let f of plan.features">✓ {{ f }}</li>
+          </ul>
+          
+          <button 
+            class="btn-plan"
+            [class.btn-current]="isCurrentPlan(plan.planId)"
+            [class.btn-upgrade]="!isCurrentPlan(plan.planId)"
+            (click)="onUpgrade(plan)"
+            [disabled]="isCurrentPlan(plan.planId)">
+            {{ isCurrentPlan(plan.planId) ? 'Current Plan' : 'Select Plan' }}
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Billing History -->
+    <section class="card history-section">
+      <div class="card-header">
+        <h2>📋 Billing History</h2>
+        <button class="btn-text">View All →</button>
+      </div>
+      
+      <div class="history-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Invoice</th>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of billingHistory">
+              <td class="mono">{{ item.invoiceId }}</td>
+              <td>{{ formatDate(item.date) }}</td>
+              <td>{{ item.description }}</td>
+              <td class="amount">{{ getCurrency(item.amount) }}</td>
+              <td>
+                <span class="status-badge" [class]="item.status">
+                  {{ item.status }}
+                </span>
+              </td>
+              <td>
+                <button class="btn-small" (click)="onViewInvoice(item)">
+                  View
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Empty State (if needed) -->
+  <div class="empty-state" *ngIf="!loading && !currentPlan">
+    <p>⚠️ No subscription found. Please contact support.</p>
+    <button class="btn-primary" (click)="router.navigate(['/contact'])">
+      Get Help
+    </button>
+  </div>
+
+</div>

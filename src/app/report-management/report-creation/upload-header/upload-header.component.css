@@ -1,0 +1,167 @@
+.upload-cards {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 10px 4px;
+  align-items: center;
+  scrollbar-width: none;
+}
+
+.upload-card {
+  position: relative;
+  width: 140px;
+  height: 50px; /* STRICT FIXED HEIGHT */
+  flex-shrink: 0;
+  background: #ffffff;
+  border: 1px dashed #cbd5e1;
+  border-radius: 6px;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.upload-card:hover {
+  border-color: #6366f1;
+  background: #f8fafc;
+}
+
+/* Row Layout after upload */
+.preview-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+}
+
+.thumb {
+  width: 38px;
+  height: 38px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.file-name {
+  font-size: 10px;
+  font-weight: 700;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-title {
+  font-size: 10px;
+  font-weight: 600;
+  color: #64748b;
+  margin: 0;
+  text-align: center;
+}
+
+/* Hidden File Input covering the card */
+.upload-card input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 5;
+}
+
+/* Small Remove Button */
+.remove-btn {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 16px;
+  height: 16px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 8px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Visit Card Adjustments */
+.visit-card {
+  width: 180px;
+  justify-content: space-between;
+  padding: 4px 8px;
+  border-style: solid; /* Make visit card stand out slightly */
+}
+
+.visit-card textarea {
+  flex: 1;
+  height: 38px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 9px;
+  padding: 4px;
+  resize: none;
+  outline: none;
+}
+
+.send-btn {
+  background: #1e293b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 9px;
+  padding: 4px 8px;
+  margin-left: 6px;
+  cursor: pointer;
+}
+
+.photo-multi-card {
+  width: 150px;
+}
+
+
+.location-card {
+  width: 180px; /* Slightly wider for the URL input */
+  flex-direction: column;
+  justify-content: center;
+}
+
+.link-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 10px;
+  padding: 2px 0;
+  outline: none;
+  color: #6366f1;
+}
+
+.coord-icon {
+  font-size: 18px;
+  margin-right: 6px;
+}
+
+.coord-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.coord-values {
+  font-size: 8px;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.input-col {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}

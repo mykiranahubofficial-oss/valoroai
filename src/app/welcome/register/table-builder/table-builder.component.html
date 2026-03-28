@@ -1,0 +1,159 @@
+<div class="popup-backdrop" *ngIf="visible">
+  <div class="popup-card">
+
+    <!-- ══ HEADER ══ -->
+ <!-- ══ HEADER ══ -->
+<div class="popup-header">
+
+  <div class="table-name-field">
+    <label>Draft Name</label>
+    <input [(ngModel)]="draftName" placeholder="e.g. Draft 1" />   <!-- ✅ new -->
+  </div>
+
+  <div class="table-name-field">
+    <label>Table Name</label>
+    <input [(ngModel)]="tableName" placeholder="e.g. Civil Work" />
+  </div>
+
+  <span class="badge badge--saved"  *ngIf="tableSaved">✓ Saved!</span>
+  <span class="badge badge--saving" *ngIf="isSaving">Saving…</span>
+</div>
+
+    <!-- ══ DEBUG BAR ══ -->
+    <div class="debug-bar">
+      <span>userId:  <strong>{{ userId  || '⚠️ empty' }}</strong></span>
+      <span>draftId: <strong>{{ draftId || '⚠️ empty' }}</strong></span>
+    </div>
+
+    <!-- ══ ERROR ══ -->
+    <div class="error-bar" *ngIf="saveError">⚠️ {{ saveError }}</div>
+
+    <!-- ══ STEP 1 — Define structure ══ -->
+    <div class="structure-panel">
+      <h3 class="section-title">Step 1 — Define Table Structure</h3>
+
+      <div class="structure-inputs">
+
+        <div class="input-group">
+          <label for="rowCount">Number of Rows</label>
+          <div class="number-control">
+            <button type="button" (click)="rowCount = rowCount > 1 ? rowCount - 1 : 1">−</button>
+            <input id="rowCount" type="number" min="1" max="50" [(ngModel)]="rowCount" />
+            <button type="button" (click)="rowCount = rowCount + 1">+</button>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="colCount">Number of Columns</label>
+          <div class="number-control">
+            <button type="button" (click)="columnCount = columnCount > 1 ? columnCount - 1 : 1">−</button>
+            <input id="colCount" type="number" min="1" max="20" [(ngModel)]="columnCount" />
+            <button type="button" (click)="columnCount = columnCount + 1">+</button>
+          </div>
+        </div>
+
+        <button class="generate-btn" (click)="generateTable()">
+          Generate Table
+        </button>
+
+      </div>
+    </div>
+
+    <!-- ══ STEP 2 — Fill headers (only after generate) ══ -->
+    <ng-container *ngIf="tableGenerated">
+
+      <div class="headers-hint">
+        <h3 class="section-title">Step 2 — Enter Headers</h3>
+        <p class="hint-text">
+          Type column headers in the <strong>top row</strong> and row labels in the
+          <strong>second column</strong>. Grey cells are structure placeholders — data is
+          entered separately per agency.
+        </p>
+      </div>
+
+      <!-- ══ TABLE PREVIEW ══ -->
+      <div class="table-scroll">
+        <table class="builder-table">
+
+          <thead>
+            <tr>
+              <!-- Col 1: Sr. No. — fixed, not editable -->
+              <th class="corner-cell">Sr. No.</th>
+
+              <!-- Col 2: Row Header — editable label -->
+              <th class="col-header-cell">
+                <input
+                  class="header-input"
+                  [(ngModel)]="headerRow[1]"
+                  placeholder="Row Header"
+                />
+              </th>
+
+              <!-- Col 3, 4, 5...: Editable column headers -->
+              <th
+                *ngFor="let ci of colRange.slice(2); let j = index; trackBy: trackByIndex"
+                class="col-header-cell"
+              >
+                <input
+                  class="header-input"
+                  [(ngModel)]="headerRow[j + 2]"
+                  [placeholder]="'Column ' + (j + 1)"
+                />
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let row of bodyRows; let i = index; trackBy: trackByIndex">
+
+              <!-- Col 1: Sr. No. — auto, not editable -->
+              <td class="corner-cell" style="text-align: center; font-weight: 600;">
+                {{ i + 1 }}
+              </td>
+
+              <!-- Col 2: Row label — editable -->
+              <td class="row-header-cell">
+                <input
+                  class="header-input"
+                  [(ngModel)]="bodyRows[i][1]"
+                  [placeholder]="'Row ' + (i + 1)"
+                />
+              </td>
+
+              <!-- Col 3+: Locked placeholder cells -->
+              <td
+                *ngFor="let ci of colRange.slice(2); trackBy: trackByIndex"
+                class="locked-cell"
+              >
+                <span class="cell-placeholder">—</span>
+              </td>
+
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+
+      <!-- ══ STRUCTURE SUMMARY ══ -->
+      <div class="structure-summary">
+        <span>📐 {{ rowCount }} rows × {{ columnCount }} columns</span>
+        <span>|</span>
+        <span>Column headers: {{ filledColumnCount }} / {{ columnCount }} filled</span>
+        <span>|</span>
+        <span>Row headers: {{ filledRowCount }} / {{ rowCount }} filled</span>
+      </div>
+
+    </ng-container>
+
+    <!-- ══ FOOTER ══ -->
+    <div class="popup-footer">
+      <div class="footer-right">
+        <button class="save-btn" (click)="saveTable()" [disabled]="!canSave">
+          {{ isSaving ? 'Saving…' : 'Save Structure' }}
+        </button>
+        <button class="cancel-btn" (click)="close()">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

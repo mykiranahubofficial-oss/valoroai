@@ -1,0 +1,369 @@
+/* ══════════════════════════════════════════
+   Backdrop & Card
+══════════════════════════════════════════ */
+.popup-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.popup-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+  width: 100%;
+  max-width: 860px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ══ HEADER ══ */
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.table-name-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.table-name-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  white-space: nowrap;
+}
+
+.table-name-field input {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 14px;
+  color: #111827;
+  width: 220px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.table-name-field input:focus {
+  border-color: #6366f1;
+}
+
+/* ══ BADGES ══ */
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge--saved {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.badge--saving {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* ══ DEBUG / ERROR ══ */
+.debug-bar {
+  background: #f9fafb;
+  padding: 6px 20px;
+  font-size: 11px;
+  color: #6b7280;
+  display: flex;
+  gap: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.error-bar {
+  background: #fef2f2;
+  color: #b91c1c;
+  padding: 8px 20px;
+  font-size: 13px;
+  border-bottom: 1px solid #fecaca;
+  flex-shrink: 0;
+}
+
+/* ══ STEP 1 — STRUCTURE PANEL ══ */
+.structure-panel {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #6366f1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 14px;
+}
+
+.structure-inputs {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* ── Stepper control ── */
+.number-control {
+  display: flex;
+  align-items: center;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 120px;
+}
+
+.number-control button {
+  background: #f3f4f6;
+  border: none;
+  width: 32px;
+  height: 36px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #374151;
+  cursor: pointer;
+  line-height: 1;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.number-control button:hover {
+  background: #e5e7eb;
+}
+
+.number-control input {
+  border: none;
+  outline: none;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  width: 56px;
+  padding: 0;
+  -moz-appearance: textfield;
+}
+
+.number-control input::-webkit-inner-spin-button,
+.number-control input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+/* ── Generate button ── */
+.generate-btn {
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.generate-btn:hover {
+  background: #4f46e5;
+  transform: translateY(-1px);
+}
+
+.generate-btn:active {
+  transform: translateY(0);
+}
+
+/* ══ STEP 2 — HEADERS HINT ══ */
+.headers-hint {
+  padding: 16px 20px 8px;
+  flex-shrink: 0;
+}
+
+.hint-text {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ══ TABLE SCROLL ══ */
+.table-scroll {
+  overflow: auto;
+  padding: 0 20px 8px;
+  flex: 1;
+}
+
+/* ══ TABLE ══ */
+.builder-table {
+  border-collapse: collapse;
+  min-width: 100%;
+  font-size: 13px;
+}
+
+/* ── Corner cell ── */
+.corner-cell {
+  background: #f3f4f6;
+  color: #9ca3af;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  padding: 8px 12px;
+  border: 1px solid #e5e7eb;
+  min-width: 48px;
+}
+
+/* ── Column header cells (editable) ── */
+.col-header-cell {
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  padding: 4px 6px;
+  min-width: 130px;
+}
+
+/* ── Row header cells (editable) ── */
+.row-header-cell {
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  padding: 4px 6px;
+  min-width: 130px;
+}
+
+/* ── Shared header input ── */
+.header-input {
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 5px 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #3730a3;
+  background: transparent;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.header-input:focus {
+  border-color: #6366f1;
+  background: #fff;
+}
+
+.header-input::placeholder {
+  color: #a5b4fc;
+  font-weight: 400;
+}
+
+/* ── Locked body cells ── */
+.locked-cell {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  text-align: center;
+  padding: 10px 16px;
+  min-width: 130px;
+}
+
+.cell-placeholder {
+  color: #d1d5db;
+  font-size: 16px;
+  font-weight: 300;
+  user-select: none;
+}
+
+/* ══ STRUCTURE SUMMARY ══ */
+.structure-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 20px 12px;
+  font-size: 12px;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.structure-summary span:nth-child(even) {
+  color: #d1d5db;
+}
+
+/* ══ FOOTER ══ */
+.popup-footer {
+  padding: 14px 20px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
+  background: #fafafa;
+}
+
+.footer-right {
+  display: flex;
+  gap: 10px;
+}
+
+.save-btn {
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.save-btn:hover:not(:disabled) {
+  background: #4f46e5;
+}
+
+.save-btn:disabled {
+  background: #c7d2fe;
+  cursor: not-allowed;
+}
+
+.cancel-btn {
+  background: transparent;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.cancel-btn:hover {
+  background: #f3f4f6;
+}

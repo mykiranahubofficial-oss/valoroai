@@ -1,0 +1,100 @@
+<div class="upload-cards">
+  <div class="upload-card">
+    <ng-container *ngIf="uploadedFiles['indexII']">
+      <div class="preview-row">
+        <img [src]="uploadedFiles['indexII'].preview" class="thumb" />
+        <span class="file-name">Index II</span>
+      </div>
+      <button class="remove-btn" (click)="removeFile('indexII')">✕</button>
+    </ng-container>
+    <ng-container *ngIf="!uploadedFiles['indexII']">
+      <p class="card-title">Index II</p>
+      <input type="file" (change)="onFileSelect($event,'indexII')" />
+    </ng-container>
+  </div>
+
+  <div class="upload-card">
+    <ng-container *ngIf="uploadedFiles['completionCertificate']">
+      <div class="preview-row">
+        <img [src]="uploadedFiles['completionCertificate'].preview" class="thumb" />
+        <span class="file-name">Completion Cert.</span>
+      </div>
+      <button class="remove-btn" (click)="removeFile('completionCertificate')">✕</button>
+    </ng-container>
+    <ng-container *ngIf="!uploadedFiles['completionCertificate']">
+      <p class="card-title">Completion Cert.</p>
+      <input type="file" (change)="onFileSelect($event,'completionCertificate')" />
+    </ng-container>
+  </div>
+
+  <div class="upload-card">
+    <ng-container *ngIf="uploadedFiles['commencementCertificate']">
+      <div class="preview-row">
+        <img [src]="uploadedFiles['commencementCertificate'].preview" class="thumb" />
+        <span class="file-name">Commencement</span>
+      </div>
+      <button class="remove-btn" (click)="removeFile('commencementCertificate')">✕</button>
+    </ng-container>
+    <ng-container *ngIf="!uploadedFiles['commencementCertificate']">
+      <p class="card-title">Commencement</p>
+      <input type="file" (change)="onFileSelect($event,'commencementCertificate')" />
+    </ng-container>
+  </div>
+
+  <div class="upload-card">
+    <ng-container *ngIf="uploadedFiles['uploadPlan']">
+      <div class="preview-row">
+        <img [src]="uploadedFiles['uploadPlan'].preview" class="thumb" />
+        <span class="file-name">Upload Plan</span>
+      </div>
+      <button class="remove-btn" (click)="removeFile('uploadPlan')">✕</button>
+    </ng-container>
+    <ng-container *ngIf="!uploadedFiles['uploadPlan']">
+      <p class="card-title">Upload Plan</p>
+      <input type="file" (change)="onFileSelect($event,'uploadPlan')" />
+    </ng-container>
+  </div>
+
+  <div class="upload-card visit-card">
+    <textarea [(ngModel)]="visitMessage" placeholder="Visit message..."></textarea>
+    <button class="send-btn" (click)="sendVisitMessage()">Send</button>
+  </div>
+
+  <div class="upload-card photo-multi-card">
+    <div class="preview-row" *ngIf="uploadedPhotos.length > 0">
+      <img [src]="uploadedPhotos[0].preview" class="thumb" />
+      <span class="file-name">Photos ({{uploadedPhotos.length}})</span>
+      <button class="remove-btn" (click)="removeAllPhotos()" title="Remove all photos">✕</button>
+    </div>
+    <ng-container *ngIf="uploadedPhotos.length === 0">
+      <p class="card-title">Property Photos</p>
+      <input type="file" multiple (change)="onMultipleFilesSelect($event)" />
+    </ng-container>
+  </div>
+
+  <div class="upload-card location-card">
+  <ng-container *ngIf="!coordinates">
+    <div class="input-col">
+      <p class="card-title">Location Link</p>
+      <input 
+        type="text" 
+        [(ngModel)]="locationLink" 
+        (input)="onLinkPaste()" 
+        placeholder="Paste Maps URL..." 
+        class="link-input"
+      />
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="coordinates">
+    <div class="preview-row">
+      <div class="coord-icon">📍</div>
+      <div class="coord-info">
+        <span class="file-name">Location Set</span>
+        <span class="coord-values">{{coordinates.lat}}, {{coordinates.lng}}</span>
+      </div>
+    </div>
+    <button class="remove-btn" (click)="removeLink()">✕</button>
+  </ng-container>
+</div>
+</div>

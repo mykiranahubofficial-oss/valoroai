@@ -1,0 +1,51 @@
+<div class="report-container">
+  <div class="content-section">
+    <div class="form-section">
+
+      <app-report-form #formRef (extractionComplete)="handleExtraction($event)">
+      </app-report-form>
+
+      <!-- Flat report: existing valuation/other details -->
+<!-- ✅ FIX — wrap both in a guard, render only after reportType is known -->
+<ng-container *ngIf="reportType !== ''">
+
+  <app-otherdetails
+    *ngIf="!isLandReport">
+  </app-otherdetails>
+
+  <app-land-otherdetails
+    *ngIf="isLandReport"
+    (valuationSaved)="handleLandValuationSaved($event)">
+  </app-land-otherdetails>
+
+</ng-container>
+
+      <app-visit-details [visitMessage]="visitMessage">
+      </app-visit-details>
+
+      <div class="photo-organizer-wrapper">
+        <app-photo-organizer (marketPhotosForwarded)="handleMarketPhotos($event)">
+        </app-photo-organizer>
+      </div>
+
+      <app-media-upload [reportId]="reportId"></app-media-upload>
+      <!-- ── Slot Photo Uploader ── -->
+      <app-slot-photo-uploader (photosChanged)="handleSlotPhotosChanged($event)">
+      </app-slot-photo-uploader>
+      <div class="create-report-wrapper">
+        <button class="create-report-btn" (click)="createReport()" [disabled]="creatingReport">
+          <!-- ✅ Bug 7 fixed: proper disabled binding -->
+
+          <span *ngIf="!creatingReport">Create Report</span>
+
+          <span *ngIf="creatingReport" class="loading-state">
+            <span class="spinner"></span>
+            Generating Report...
+          </span>
+
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

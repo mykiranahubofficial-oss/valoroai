@@ -1,0 +1,76 @@
+<div class="popup-backdrop" *ngIf="visible">
+  <div class="popup-card">
+
+    <!-- ══ HEADER ══ -->
+    <div class="popup-header">
+      <h3 class="popup-title">Create New Draft</h3>
+      <span class="badge badge--saved"  *ngIf="isSaved">✓ Draft Created!</span>
+      <span class="badge badge--saving" *ngIf="isSaving">Saving…</span>
+    </div>
+
+    <!-- ══ ERROR ══ -->
+    <div class="error-bar" *ngIf="saveError">⚠️ {{ saveError }}</div>
+
+    <!-- ══ STEP 1 — Draft Name ══ -->
+    <div class="structure-panel">
+      <h4 class="section-title">Step 1 — Draft Name</h4>
+      <div class="input-group">
+        <label>Draft Name <span class="required">*</span></label>
+        <input
+          [(ngModel)]="draftName"
+          placeholder="e.g. Chinchwad Flat Draft"
+          class="text-input"
+        />
+      </div>
+    </div>
+
+    <!-- ══ STEP 2 — Upload Template ══ -->
+    <div class="structure-panel">
+      <h4 class="section-title">Step 2 — Upload Template (Optional)</h4>
+      <p class="hint-text">Upload a PDF, DOCX or Excel template for this draft.</p>
+
+      <!-- File not selected -->
+      <div class="upload-area" *ngIf="!templateFile">
+        <label class="upload-label">
+          <input
+            type="file"
+            accept=".pdf,.docx,.xlsx,.xls"
+            (change)="onFileSelected($event)"
+            style="display: none"
+          />
+          <span class="upload-icon">📎</span>
+          <span>Click to select file</span>
+          <span class="hint-text">PDF, DOCX, Excel supported</span>
+        </label>
+      </div>
+
+      <!-- File selected -->
+      <div class="file-preview" *ngIf="templateFile">
+        <span class="file-icon">
+          {{ templateType === 'pdf' ? '📄' : templateType === 'docx' ? '📝' : '📊' }}
+        </span>
+        <span class="file-name">{{ templateName }}</span>
+        <span class="file-type-badge">{{ templateType.toUpperCase() }}</span>
+        <button class="remove-btn" (click)="removeFile()">✕</button>
+      </div>
+
+      <!-- Upload error -->
+      <div class="error-bar" *ngIf="uploadError">⚠️ {{ uploadError }}</div>
+    </div>
+
+    <!-- ══ FOOTER ══ -->
+    <div class="popup-footer">
+      <div class="footer-right">
+        <button
+          class="save-btn"
+          (click)="saveDraft()"
+          [disabled]="!canSave"
+        >
+          {{ isSaving ? 'Saving…' : 'Create Draft' }}
+        </button>
+        <button class="cancel-btn" (click)="close()">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,167 @@
+<div class="visit-section">
+  <div class="header-row">
+    <div class="title-meta">
+      <h3>Visit Details</h3>
+      <p class="subtitle">Extract data from visit messages or enter manually</p>
+    </div>
+  </div>
+
+  <div class="visit-container">
+    <div class="visit-left">
+      <div class="textarea-wrapper">
+        <label class="panel-label">Raw Visit Message</label>
+        <textarea
+          [(ngModel)]="visitMessage"
+          placeholder="Paste your visit message here..."
+        ></textarea>
+        <div class="actions">
+          <button (click)="parseVisitMessage()" class="extract-btn">
+            <span class="btn-icon">⚡</span> Extract Data
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="visit-right">
+      <div class="form-scroll-area">
+        
+        <div class="visit-grid">
+          <div>
+            <label>Visitor Name</label>
+            <input [(ngModel)]="visitDetails.visitorName" placeholder="Name of visitor">
+          </div>
+
+<!-- Owner Name -->
+<div>
+  <label>Owner Name</label>
+  <div class="safety-field-wrap">
+    
+<input [(ngModel)]="visitDetails.ownerName"
+       (ngModelChange)="onWatchedFieldChange()"
+       placeholder="Full name"
+       [class.field-mismatch]="isMismatched('ownerName')"
+       [class.field-missing]="isMissing('ownerName')">
+    <span *ngIf="isMismatched('ownerName')"
+          class="mismatch-icon red"
+          title="Value differs from Report Form">⚠</span>
+    <span *ngIf="isMissing('ownerName') && !isMismatched('ownerName')"
+          class="mismatch-icon orange"
+          title="Value missing in one of the forms">ⓘ</span>
+  </div>
+</div>
+
+<!-- Building Name -->
+<div>
+  <label>Building Name</label>
+  <div class="safety-field-wrap">
+    
+<input [(ngModel)]="visitDetails.buildingName"
+       (ngModelChange)="onWatchedFieldChange()"
+       placeholder="Name"
+       [class.field-mismatch]="isMismatched('buildingName')"
+       [class.field-missing]="isMissing('buildingName')">
+    <span *ngIf="isMismatched('buildingName')"
+          class="mismatch-icon red"
+          title="Value differs from Report Form">⚠</span>
+    <span *ngIf="isMissing('buildingName') && !isMismatched('buildingName')"
+          class="mismatch-icon orange"
+          title="Value missing in one of the forms">ⓘ</span>
+  </div>
+</div>
+
+<!-- Flat No -->
+<div>
+  <label>Flat No</label>
+  <div class="safety-field-wrap">
+    
+<input [(ngModel)]="visitDetails.flatNo"
+       (ngModelChange)="onWatchedFieldChange()"
+       placeholder="No."
+       [class.field-mismatch]="isMismatched('flatNo')"
+       [class.field-missing]="isMissing('flatNo')">
+    <span *ngIf="isMismatched('flatNo')"
+          class="mismatch-icon red"
+          title="Value differs from Report Form">⚠</span>
+    <span *ngIf="isMissing('flatNo') && !isMismatched('flatNo')"
+          class="mismatch-icon orange"
+          title="Value missing in one of the forms">ⓘ</span>
+  </div>
+</div>
+
+          <div>
+            <label>Flat Type</label>
+            <input [(ngModel)]="visitDetails.flatType" placeholder="e.g. 2BHK">
+          </div>
+
+          <div>
+            <label>Total Floors</label>
+            <input [(ngModel)]="visitDetails.totalFloor" placeholder="Max">
+          </div>
+
+          <div>
+            <label>Per Floor</label>
+            <input [(ngModel)]="visitDetails.perFloor" placeholder="Qty">
+          </div>
+
+          <div>
+            <label>Total Flats</label>
+            <input [(ngModel)]="visitDetails.totalFlat" placeholder="Total">
+          </div>
+
+          <div>
+            <label>Wings</label>
+            <input [(ngModel)]="visitDetails.wings" placeholder="Qty">
+          </div>
+
+          <div>
+            <label>Lifts</label>
+            <input [(ngModel)]="visitDetails.lift" placeholder="Qty">
+          </div>
+
+          <div>
+            <label>Parking</label>
+            <input [(ngModel)]="visitDetails.parking" placeholder="Type">
+          </div>
+
+          <div>
+            <label>Occupied</label>
+            <input [(ngModel)]="visitDetails.occupied" placeholder="Status">
+          </div>
+
+          <div class="full">
+            <label>Landmark</label>
+            <input [(ngModel)]="visitDetails.landmark" placeholder="Nearest location landmark">
+          </div>
+        </div>
+
+        <h4 class="section-divider">Building Boundaries</h4>
+
+        <div class="visit-grid">
+          <div>
+            <label>East</label>
+            <input [(ngModel)]="visitDetails.eastBoundary" placeholder="Boundary">
+          </div>
+          <div>
+            <label>West</label>
+            <input [(ngModel)]="visitDetails.westBoundary" placeholder="Boundary">
+          </div>
+          <div>
+            <label>South</label>
+            <input [(ngModel)]="visitDetails.southBoundary" placeholder="Boundary">
+          </div>
+          <div>
+            <label>North</label>
+            <input [(ngModel)]="visitDetails.northBoundary" placeholder="Boundary">
+          </div>
+        </div>
+
+        <!-- <div class="save-actions">
+          <button class="save-btn" (click)="saveVisitDetails()">
+            Save Visit Details
+          </button>
+        </div> -->
+
+      </div>
+    </div>
+  </div>
+</div>

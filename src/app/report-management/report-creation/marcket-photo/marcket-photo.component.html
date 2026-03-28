@@ -1,0 +1,93 @@
+<div class="editor-layout">
+
+    <!-- LEFT PANEL -->
+    <aside class="upload-panel">
+
+        <div class="panel-header">
+            <h3>Marcket Link Photos</h3>
+            <p>Upload or paste images</p>
+        </div>
+
+        <div class="upload-dropzone">
+
+            <input type="file" multiple accept="image/*" (change)="onFilesSelected($event)" id="fileInput" hidden>
+
+            <label for="fileInput" class="dropzone">
+
+                <div class="drop-content">
+
+                    <div class="upload-icon">📸</div>
+
+                    <p class="main-text">
+                        Drag & Drop Photos
+                    </p>
+
+                    <p class="sub-text">
+                        or Click to Upload
+                    </p>
+
+                    <p class="paste-text">
+                        You can also paste images (Ctrl + V)
+                    </p>
+
+                </div>
+
+            </label>
+
+        </div>
+
+    </aside>
+
+
+    <!-- RIGHT PANEL -->
+
+    <main class="preview-panel">
+
+        <div class="pages-wrapper">
+
+            <div class="a4-page" *ngFor="let page of pages; let i=index">
+
+                <div class="page-header">
+                    Valuation Report – Page {{i+1}}
+                </div>
+
+                <div class="photo-grid">
+
+                    <div class="photo-block" *ngFor="let slot of page">
+
+                        <div class="image-box">
+
+                            <!-- REMOVE BUTTON -->
+                            <button class="remove-photo-btn" *ngIf="slot.previewUrl" (click)="removePhoto(slot.id)">
+                                ✕
+                            </button>
+
+                            <!-- IMAGE -->
+                            <img *ngIf="slot.previewUrl" [src]="slot.previewUrl" />
+
+                            <!-- EMPTY SLOT -->
+                            <div *ngIf="!slot.previewUrl" class="empty">
+                                Photo {{slot.id}}
+                            </div>
+
+                        </div>
+
+                        <div class="caption">
+                            {{slot.caption || 'No caption'}}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="page-footer">
+                    Confidential Property Document
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>

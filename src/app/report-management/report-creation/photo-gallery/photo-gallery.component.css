@@ -1,0 +1,237 @@
+/* =========================
+   HOST
+========================= */
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+.gallery-sidebar {
+  background: white;
+  border-radius: 8px;
+  padding: 10px 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0;                        /* remove gap, control spacing manually */
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* =========================
+   HEADER ROW
+========================= */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 8px;
+  margin-bottom: 8px;            /* spacing between header and grid */
+  flex-shrink: 0;
+}
+
+.sidebar-header h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+  white-space: nowrap;
+}
+
+/* =========================
+   UPLOAD BUTTON
+========================= */
+.upload-btn-label {
+  background: #000;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.2s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.upload-btn-label:hover {
+  background: #333;
+}
+
+/* =========================
+   GALLERY GRID
+========================= */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);   /* always 6 per row */
+  grid-auto-rows: 55px;
+  gap: 4px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  align-content: start;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 2px;
+}
+
+/* scrollbar */
+.gallery-grid::-webkit-scrollbar {
+  width: 3px;
+}
+
+.gallery-grid::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+/* =========================
+   GALLERY ITEM
+========================= */
+.gallery-item {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.15s;
+  min-width: 0;
+}
+
+.gallery-item:hover {
+  border-color: #94a3b8;
+}
+
+.gallery-item.selected {
+  border: 2px solid black;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* =========================
+   CHECK BADGE
+========================= */
+.check-badge {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  background: #16a34a;
+  color: white;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  font-size: 19px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  line-height: 1;
+}
+/* =========================
+   DELETE BUTTON
+========================= */
+.delete-btn {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background: #1e293b;        /* dark/black by default */
+  color: white;
+  border: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 9px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  padding: 0;
+  line-height: 1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.delete-btn:hover {
+  background: #ef4444;         /* turns red on hover */
+}
+/* =========================
+   EMPTY STATE
+========================= */
+.empty-gallery {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 11px;
+  padding: 15px 0;
+}
+
+/* =========================
+   TABLET
+========================= */
+@media (max-width: 1024px) {
+
+  .gallery-grid {
+    grid-template-columns: repeat(6, 1fr);   /* keep 6 on tablet too */
+    grid-auto-rows: 48px;                     /* slightly smaller rows */
+  }
+
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 600px) {
+
+  .gallery-sidebar {
+    padding: 8px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(4, 1fr);   /* 4 per row on mobile */
+    grid-auto-rows: 55px;
+    gap: 4px;
+  }
+
+  .sidebar-header h3 {
+    font-size: 12px;
+  }
+
+  .upload-btn-label {
+    padding: 3px 8px;
+    font-size: 10px;
+  }
+
+}
+
+/* =========================
+   SMALL PHONES
+========================= */
+@media (max-width: 400px) {
+
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+}

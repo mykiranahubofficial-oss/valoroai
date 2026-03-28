@@ -1,0 +1,341 @@
+<!-- report-form.component.html -->
+<div class="wrapper">
+  <div class="layout">
+
+    <!-- LEFT: Index II Preview -->
+    <!-- LEFT: Index II Upload Panel -->
+    <aside class="preview-panel">
+
+
+      <div class="panel-header">
+        <span>Index II</span>
+      </div>
+
+      <!-- Empty state — only when no files -->
+      <div *ngIf="uploadedFiles.length === 0" class="upload-zone-main">
+        <div class="upload-icon">📁</div>
+        <p>No documents uploaded</p>
+        <label class="btn-black">
+          Upload Files
+          <input type="file" multiple accept="image/jpeg,image/png,image/webp,application/pdf"
+            (change)="onMultiFileSelect($event)" hidden>
+        </label>
+        <p class="upload-hint">Images or PDFs, up to 20 files</p>
+      </div>
+
+      <!-- File list — shown when files exist -->
+      <div *ngIf="uploadedFiles.length > 0" class="file-list">
+
+
+        <div *ngFor="let f of uploadedFiles; let i = index" class="file-card"
+          [class.file-card-active]="activeFileIndex === i" (click)="setActiveFile(i)">
+
+          <!-- Thumbnail -->
+          <div class="file-thumb">
+            <img *ngIf="f.previewUrl" [src]="f.previewUrl" class="thumb-img" />
+            <div *ngIf="!f.previewUrl" class="thumb-pdf">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+              </svg>
+              <span>PDF</span>
+            </div>
+          </div>
+
+          <!-- File info -->
+          <div class="file-info">
+            <span class="file-name">{{ f.file.name }}</span>
+            <span class="file-size">{{ (f.file.size / 1024).toFixed(0) }} KB</span>
+          </div>
+
+          <!-- Remove -->
+          <button class="file-remove" (click)="removeUploadedFile(i, $event)" title="Remove">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Active preview -->
+      <!-- Add more files zone — always visible once files exist -->
+      <div *ngIf="uploadedFiles.length > 0" class="upload-zone-mini">
+        <label class="upload-zone-mini-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" y1="3" x2="12" y2="15" />
+          </svg>
+          <span>Add more files</span>
+          <input type="file" multiple accept="image/jpeg,image/png,image/webp,application/pdf"
+            (change)="onMultiFileSelect($event)" hidden>
+        </label>
+      </div>
+
+      <!-- Extract button -->
+      <div *ngIf="uploadedFiles.length > 0" class="extract-area">
+        <div class="file-count-badge" *ngIf="uploadedFiles.length > 1">
+          {{ uploadedFiles.length }} files selected
+        </div>
+
+
+        <button class="btn-black full-width" (click)="extractData()" [disabled]="isExtracting">
+          <span *ngIf="!isExtracting">Extract Data</span>
+          <span *ngIf="isExtracting" class="spinner"></span>
+        </button>
+
+        <!-- Stop button — only visible during extraction -->
+        <button *ngIf="isExtracting" class="btn-stop full-width" (click)="stopExtraction()">
+          🛑 Stop Extraction
+        </button>
+
+        <p *ngIf="isExtracting" class="processing-text">
+          Processing {{ uploadedFiles.length > 1 ? uploadedFiles.length + ' files' : 'document' }}...
+        </p>
+
+
+      </div>
+
+
+
+    </aside>
+    <!-- end aside -->
+
+    <!-- RIGHT: Form -->
+    <main class="form-panel">
+
+      <!-- Header -->
+      <div class="form-top">
+        <span class="report-id">ID: {{reportId}}</span>
+        <input type="text" [(ngModel)]="formData.filename" placeholder="PRN" class="filename-input">
+      </div>
+
+      <!-- Section: Property Details -->
+      <div class="section-title">Property Details</div>
+      <div class="grid-3">
+
+        <div class="field">
+          <label>Owner Name</label>
+          <div class="safety-field-wrap">
+            <input type="text" [(ngModel)]="formData.ownerName" (ngModelChange)="onFieldChange('ownerName')"
+              [class.field-mismatch]="isMismatched('ownerName')"
+              [class.field-missing]="isMissing('ownerName') || isEmptyField('ownerName')">
+            <span *ngIf="isMismatched('ownerName')" class="mismatch-icon red"
+              title="Differs from Visit Details">⚠</span>
+            <span *ngIf="(isMissing('ownerName') || isEmptyField('ownerName')) && !isMismatched('ownerName')"
+              class="mismatch-icon orange" title="Empty after extraction">ⓘ</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Building Name</label>
+          <div class="safety-field-wrap">
+            <input type="text" [(ngModel)]="formData.buildingName" (ngModelChange)="onFieldChange('buildingName')"
+              [class.field-mismatch]="isMismatched('buildingName')"
+              [class.field-missing]="isMissing('buildingName') || isEmptyField('buildingName')">
+            <span *ngIf="isMismatched('buildingName')" class="mismatch-icon red"
+              title="Differs from Visit Details">⚠</span>
+            <span *ngIf="(isMissing('buildingName') || isEmptyField('buildingName')) && !isMismatched('buildingName')"
+              class="mismatch-icon orange" title="Empty after extraction">ⓘ</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Location Context</label>
+          <input type="text" [(ngModel)]="formData.locationContext">
+        </div>
+
+        <div class="field">
+          <label>Plot No</label>
+          <div class="safety-field-wrap">
+            <input type="text" [(ngModel)]="formData.plotNum" (ngModelChange)="onFieldChange('plotNum')">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Sr No</label>
+          <div class="safety-field-wrap">
+            <input type="text" [(ngModel)]="formData.indexiiserveno" (ngModelChange)="onFieldChange('indexiiserveno')"
+              [class.field-missing]="isEmptyField('indexiiserveno')">
+            <span *ngIf="isEmptyField('indexiiserveno')" class="mismatch-icon orange"
+              title="Empty after extraction">ⓘ</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Flat No</label>
+          <div class="safety-field-wrap">
+            <input type="text" [(ngModel)]="formData.flatNo" (ngModelChange)="onWatchedFieldChange()"
+              [class.field-mismatch]="isMismatched('flatNo')"
+              [class.field-missing]="!isMismatched('flatNo') && isMissing('flatNo')">
+            <span *ngIf="isMismatched('flatNo')" class="mismatch-icon red" title="Differs from Visit Details">⚠</span>
+            <span *ngIf="!isMismatched('flatNo') && isMissing('flatNo')" class="mismatch-icon orange"
+              title="Field is empty">ⓘ</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Floor</label>
+          <div class="safety-field-wrap">
+            <input type="text" [(ngModel)]="formData.floor" (ngModelChange)="onFieldChange('floor')"
+              [class.field-missing]="isEmptyField('floor')">
+            <span *ngIf="isEmptyField('floor')" class="mismatch-icon orange" title="Empty after extraction">ⓘ</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Village</label>
+          <div class="safety-field-wrap">
+            <input type="text" [(ngModel)]="formData.village" (ngModelChange)="onFieldChange('village')"
+              (blur)="updatePincodeFromAddress()" [class.field-missing]="isEmptyField('village')">
+            <span *ngIf="isEmptyField('village')" class="mismatch-icon orange" title="Empty after extraction">ⓘ</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Taluka</label>
+          <div class="safety-field-wrap">
+            <input type="text" [(ngModel)]="formData.taluka" (ngModelChange)="onFieldChange('taluka')"
+              (blur)="updatePincodeFromAddress()" [class.field-missing]="isEmptyField('taluka')">
+            <span *ngIf="isEmptyField('taluka')" class="mismatch-icon orange" title="Empty after extraction">ⓘ</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>District</label>
+          <div class="safety-field-wrap">
+            <input type="text" [(ngModel)]="formData.district" (ngModelChange)="onFieldChange('district')"
+              (blur)="updatePincodeFromAddress()" [class.field-missing]="isEmptyField('district')">
+            <span *ngIf="isEmptyField('district')" class="mismatch-icon orange" title="Empty after extraction">ⓘ</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Pincode</label>
+          <div class="safety-field-wrap">
+            <input id="pincodeField" type="text" [(ngModel)]="formData.pincode" (input)="onPincodeChange($event)"
+              (ngModelChange)="onFieldChange('pincode')" maxlength="6" [class.field-error]="pincodeError"
+              [class.field-missing]="isEmptyField('pincode') && !pincodeError">
+            <span *ngIf="isEmptyField('pincode') && !pincodeError" class="mismatch-icon orange"
+              title="Empty after extraction">ⓘ</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Report Date</label>
+          <div class="safety-field-wrap">
+            <input type="date" [ngModel]="formatToInputDate(formData.repDate)"
+              (ngModelChange)="formData.repDate = $event; onWatchedFieldChange()"
+              [class.field-missing]="isMissing('repDate')">
+            <span *ngIf="isMissing('repDate')" class="mismatch-icon orange" title="Field is empty">ⓘ</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Property Location + Brief -->
+      <div class="grid-2 mt-10">
+        <div class="field">
+          <label>Property Location</label>
+          <div class="safety-field-wrap">
+            <textarea [(ngModel)]="formData.propertyLocation" (ngModelChange)="onWatchedFieldChange()" rows="3"
+              [class.field-missing]="isMissing('propertyLocation')"></textarea>
+            <span *ngIf="isMissing('propertyLocation')" class="mismatch-icon orange" title="Field is empty">ⓘ</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Brief Information</label>
+          <textarea [(ngModel)]="formData.briefdisofproject" rows="3"></textarea>
+        </div>
+      </div>
+
+      <!-- Section: Index II -->
+      <div class="section-title">Index II Details</div>
+      <div class="grid-3">
+
+        <div class="field">
+          <label>Sr No</label>
+          <div class="safety-field-wrap">
+            <input type="text" [(ngModel)]="formData.indexiiserveno" (ngModelChange)="onWatchedFieldChange()"
+              [class.field-missing]="isMissing('indexiiserveno')">
+            <span *ngIf="isMissing('indexiiserveno')" class="mismatch-icon orange" title="Field is empty">ⓘ</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Date</label>
+          <div class="safety-field-wrap">
+            <input type="date" [(ngModel)]="formData.indexiidate" (ngModelChange)="onWatchedFieldChange()"
+              [class.field-missing]="isMissing('indexiidate')">
+            <span *ngIf="isMissing('indexiidate')" class="mismatch-icon orange" title="Field is empty">ⓘ</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Seller</label>
+          <div class="safety-field-wrap">
+            <input type="text" [(ngModel)]="formData.developerorsellar"
+              (ngModelChange)="onFieldChange('developerorsellar')"
+              [class.field-missing]="isEmptyField('developerorsellar')">
+            <span *ngIf="isEmptyField('developerorsellar')" class="mismatch-icon orange"
+              title="Empty after extraction">ⓘ</span>
+          </div>
+        </div>
+
+        <div class="field ">
+          <label>Agreement Value</label>
+          <div class="safety-field-wrap amount-row">
+            <input type="text" class="amount-input" [value]="formatIndianCurrency(formData.agreementvalue)"
+              (input)="updateAgreementValue($event); onFieldChange('agreementvalue')"
+              [class.field-missing]="isEmptyField('agreementvalue')">
+            <!-- <span class="amount-words">{{ formData.agreementvalue | amountInWords }}</span> -->
+            <span *ngIf="isEmptyField('agreementvalue')" class="mismatch-icon orange"
+              title="Empty after extraction">ⓘ</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Lat / Long</label>
+          <div class="safety-field-wrap">
+            <input type="text" [(ngModel)]="formData.latlong" (ngModelChange)="onFieldChange('latlong')"
+              placeholder="e.g. 18.5204, 73.8567">
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- ============================================
+           AGREEMENT VERIFICATION — bottom of form
+      ============================================= -->
+      <!-- Agreement Verification -->
+      <app-agreement-verification *ngIf="showVerification && agreementVerification"
+        [verification]="agreementVerification" [formData]="formData" (correctionApplied)="onCorrectionApplied($event)">
+      </app-agreement-verification>
+      <!-- end agreement verification -->
+      <!-- Section: Area Calculations -->
+      <div class="section-title">Area Calculations</div>
+      <div class="area-split">
+
+        <!-- end search-values-box -->
+
+        <app-area-calculation [areas]="areas" [balconies]="balconies" [terraces]="terraces" [loading]="loading"
+          [totalSqm]="totalSqm" [totalSqft]="totalSqft" [totalBuiltSqm]="totalBuiltSqm"
+          [totalBuiltSqft]="totalBuiltSqft" [searchForm]="searchForm" [searchListings]="searchListings"
+          [isSearching]="isSearching" [searchError]="searchError" (stateChange)="onAreaStateChange($event)"
+          (searchFormChange)="onSearchFormChange($event)" (searchRequested)="onSearchValues()"
+          (searchCleared)="onClearSearch()" (autoFillRequested)="autoFillSearchForm()" (balconyAdded)="onBalconyAdded()"
+          (terraceAdded)="onTerraceAdded()">
+        </app-area-calculation>
+
+        <!-- end area-table-wrap -->
+
+      </div>
+      <!-- end area-split -->
+
+
+      <!-- Section: Site & Area Details -->
+
+    </main>
+  </div>
+</div>

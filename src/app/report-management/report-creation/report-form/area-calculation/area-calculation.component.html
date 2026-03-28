@@ -1,0 +1,211 @@
+<div class="area-split">
+
+  <!-- ══════════════════════════
+       LEFT: Search Values Box
+  ══════════════════════════ -->
+  <div class="search-values-box">
+
+    <div class="search-box-header">
+      <span>Search Values</span>
+      <button class="link-btn" type="button" (click)="onAutoFill()">Auto Fill</button>
+    </div>
+
+    <div class="search-box-body">
+
+      <div class="field">
+        <label>Building Name</label>
+        <input type="text"
+               [(ngModel)]="searchForm.buildingName"
+               (ngModelChange)="onSearchFormChange()"
+               placeholder="e.g. Godrej Aqua Vista">
+      </div>
+
+      <div class="field">
+        <label>Address / Location</label>
+        <input type="text"
+               [(ngModel)]="searchForm.address"
+               (ngModelChange)="onSearchFormChange()"
+               placeholder="e.g. Wakad, Pune">
+      </div>
+
+      <div class="search-row-2">
+        <div class="field">
+          <label>Area (Sq. Ft)</label>
+          <input type="number"
+                 [(ngModel)]="searchForm.areaSqft"
+                 (ngModelChange)="onSearchFormChange()"
+                 placeholder="e.g. 975">
+        </div>
+        <div class="field">
+          <label>Area Type</label>
+          <select [(ngModel)]="searchForm.areaType"
+                  (ngModelChange)="onSearchFormChange()"
+                  class="search-select">
+            <option value="carpet">Carpet</option>
+            <option value="builtUp">Built Up</option>
+            <option value="superBuiltUp">Super Built Up</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>BHK</label>
+          <input type="text"
+                 [(ngModel)]="searchForm.bhk"
+                 (ngModelChange)="onSearchFormChange()"
+                 placeholder="e.g. 2 BHK">
+        </div>
+      </div>
+
+      <div *ngIf="searchError" class="search-error">{{ searchError }}</div>
+
+      <div class="search-btn-row">
+        <button class="btn-black" type="button"
+                (click)="onSearch()" [disabled]="isSearching">
+          <span *ngIf="!isSearching">Search</span>
+          <span *ngIf="isSearching" class="spinner"></span>
+        </button>
+        <button class="btn-outline" type="button"
+                (click)="onClearSearch()" [disabled]="isSearching">
+          Clear
+        </button>
+      </div>
+
+    </div>
+    <!-- end search-box-body -->
+
+    <!-- Loading state -->
+    <div *ngIf="isSearching" class="listings-loading">
+      <div class="loading-spinner"></div>
+      <span>Searching MagicBricks, 99acres, NoBroker…</span>
+    </div>
+
+    <!-- Results -->
+    <div *ngIf="!isSearching && searchListings.length > 0" class="listings-output">
+      <div class="listings-header">
+        <span>{{ searchListings.length }} Comparable{{ searchListings.length > 1 ? 's' : '' }} Found</span>
+        <span class="listings-subtext">Scroll to view all</span>
+      </div>
+      <div class="listings-scroll">
+        <div class="listing-card" *ngFor="let item of searchListings; let i = index">
+          <div class="listing-num">{{ i + 1 }}</div>
+          <div class="listing-body">
+
+            <div class="listing-top-row">
+              <div class="listing-name">{{ item.buildingName }}</div>
+              <div class="listing-top-right">
+                <div class="listing-source-badge" *ngIf="item.website">{{ item.website }}</div>
+                <a *ngIf="item.url"
+                   [href]="item.url" target="_blank" rel="noopener noreferrer"
+                   class="listing-link-btn" title="Open listing">🔗</a>
+                <a *ngIf="!item.url && item.website"
+                   [href]="getSearchUrl(item)" target="_blank" rel="noopener noreferrer"
+                   class="listing-link-btn" title="Search on {{ item.website }}">🔗</a>
+              </div>
+            </div>
+
+            <div class="listing-meta">
+              <span *ngIf="item.bhk"      class="tag tag-bhk">{{ item.bhk }}</span>
+              <span *ngIf="item.distance" class="tag tag-dist">📍 {{ item.distance }}</span>
+              <span *ngIf="item.areaType" class="tag tag-type">{{ item.areaType }}</span>
+            </div>
+
+            <div class="listing-stats-row">
+              <div class="listing-stat" *ngIf="item.area">
+                <span class="stat-label">Area</span>
+                <span class="stat-value">{{ item.area }} <small>sqft</small></span>
+              </div>
+              <div class="stat-divider" *ngIf="item.area && item.pricePerSqft"></div>
+              <div class="listing-stat" *ngIf="item.pricePerSqft">
+                <span class="stat-label">Rate/sqft</span>
+                <span class="stat-value">₹{{ item.pricePerSqft | number:'1.0-0' }}</span>
+              </div>
+              <div class="stat-divider" *ngIf="item.pricePerSqft && item.price"></div>
+              <div class="listing-stat highlight" *ngIf="item.price">
+                <span class="stat-label">Total</span>
+                <span class="stat-value price-total">
+                  ₹{{ item.price >= 10000000
+                    ? ((item.price / 10000000) | number:'1.2-2') + ' Cr'
+                    : ((item.price / 100000)   | number:'1.2-2') + ' L' }}
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end listings-output -->
+
+  </div>
+  <!-- end search-values-box -->
+
+  <!-- ══════════════════════════
+       RIGHT: Area Table
+  ══════════════════════════ -->
+  <div class="area-table-wrap">
+    <div class="area-table">
+
+      <!-- Header -->
+      <div class="area-row header">
+        <div>Type</div>
+        <div>Sq. Mt</div>
+        <div>Sq. Ft</div>
+        <div>Loading %</div>
+        <div>Built (Mt)</div>
+        <div>Built (Ft)</div>
+      </div>
+
+      <!-- Main areas -->
+      <div class="area-row" *ngFor="let row of areas">
+        <div class="row-label">{{ row.type }}</div>
+        <input type="number" [(ngModel)]="row.sqm"  (input)="updateSqm(row)">
+        <input type="number" [(ngModel)]="row.sqft" (input)="updateSqft(row)">
+        <input type="number" [(ngModel)]="loading"  (input)="onLoadingChange()">
+        <input type="text"   [value]="row.builtSqm"  readonly class="readonly">
+        <input type="text"   [value]="row.builtSqft" readonly class="readonly">
+      </div>
+
+      <!-- Balconies -->
+      <div class="area-row" *ngFor="let row of balconies; let i = index">
+        <div class="row-label">
+          {{ row.type }}
+          <button *ngIf="i === balconies.length - 1"
+                  class="add-btn" type="button"
+                  (click)="onAddBalcony()">+</button>
+        </div>
+        <input type="number" [(ngModel)]="row.sqm"  (input)="updateSqm(row)">
+        <input type="number" [(ngModel)]="row.sqft" (input)="updateSqft(row)">
+        <input type="number" [(ngModel)]="loading"  (input)="onLoadingChange()">
+        <input type="text"   [value]="row.builtSqm"  readonly class="readonly">
+        <input type="text"   [value]="row.builtSqft" readonly class="readonly">
+      </div>
+
+      <!-- Terraces -->
+      <div class="area-row" *ngFor="let row of terraces; let i = index">
+        <div class="row-label">
+          {{ row.type }}
+          <button *ngIf="i === terraces.length - 1"
+                  class="add-btn" type="button"
+                  (click)="onAddTerrace()">+</button>
+        </div>
+        <input type="number" [(ngModel)]="row.sqm"  (input)="updateSqm(row)">
+        <input type="number" [(ngModel)]="row.sqft" (input)="updateSqft(row)">
+        <input type="number" [(ngModel)]="loading"  (input)="onLoadingChange()">
+        <input type="text"   [value]="row.builtSqm"  readonly class="readonly">
+        <input type="text"   [value]="row.builtSqft" readonly class="readonly">
+      </div>
+
+      <!-- Totals -->
+      <div class="area-row total-row">
+        <div class="row-label">TOTAL</div>
+        <div>{{ totalSqm }}</div>
+        <div>{{ totalSqft }}</div>
+        <div>{{ loading }}%</div>
+        <div>{{ totalBuiltSqm }}</div>
+        <div>{{ totalBuiltSqft }}</div>
+      </div>
+
+    </div>
+  </div>
+  <!-- end area-table-wrap -->
+
+</div>

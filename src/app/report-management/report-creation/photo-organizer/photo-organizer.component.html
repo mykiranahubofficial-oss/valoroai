@@ -1,0 +1,13 @@
+<div class="organizer-wrapper">
+
+  <!-- LEFT SIDE -->
+  <div class="organizer-container">
+    <app-photo-gallery></app-photo-gallery>
+    <app-photo-layout-preview></app-photo-layout-preview>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="marcket-container">
+<app-marcket-photo (marketPhotosChange)="onMarketPhotosChange($event)"></app-marcket-photo>  </div>
+
+</div>

@@ -1,0 +1,57 @@
+<div class="register-wrapper">
+
+  <div class="register-container">
+
+    <h2>Create Admin Account</h2>
+    <p class="subtitle">Start managing your valuation reports</p>
+
+    <form (ngSubmit)="registerAgency()">
+
+      <div class="form-grid">
+
+        <div class="input-group">
+          <label>Agency Name *</label>
+          <input type="text" name="agencyName" [(ngModel)]="form.agencyName" required>
+        </div>
+
+        <div class="input-group">
+          <label>Owner Name</label>
+          <input type="text" name="ownerName" [(ngModel)]="form.ownerName">
+        </div>
+
+        <div class="input-group full">
+          <label>Address</label>
+          <textarea name="address" [(ngModel)]="form.address"></textarea>
+        </div>
+
+        <div class="input-group">
+          <label>Mobile Number</label>
+          <input type="tel" name="mobileNumber" [(ngModel)]="form.mobileNumber">
+        </div>
+
+        <div class="input-group">
+          <label>Email</label>
+          <input type="email" name="email" [(ngModel)]="form.email">
+        </div>
+
+        <div class="input-group">
+          <label>Username *</label>
+          <input type="text" name="userId" [(ngModel)]="form.userId" required>
+        </div>
+
+        <div class="input-group">
+          <label>Password *</label>
+          <input type="password" name="userPass" [(ngModel)]="form.userPass" required>
+        </div>
+
+      </div>
+
+      <button class="create-btn" type="submit">
+        Create Account
+      </button>
+
+    </form>
+
+  </div>
+
+</div>

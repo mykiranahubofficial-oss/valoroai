@@ -1,0 +1,110 @@
+/* ===============================
+   SENTENCE ROW
+================================ */
+
+.sentence-row{
+  margin-bottom:14px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  align-items:center;
+  font-size:13px;
+  line-height:1.6;
+  color:#111827;
+}
+
+/* ===============================
+   GRID LAYOUT
+================================ */
+
+.grid-4{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.grid-3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.grid-2{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+
+/* ===============================
+   INLINE FIELD
+================================ */
+
+.field-inline{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:wrap;
+  font-size:13px;
+  line-height:1.5;
+}
+
+/* ===============================
+   INPUT STYLE
+================================ */
+
+input{
+  border:none;
+  border-bottom:1px solid #cbd5e1;
+  outline:none;
+  padding:4px 2px;
+  background:transparent;
+  font-size:13px;
+  font-weight:700; /* BOLD INPUT TEXT */
+  min-width:70px;
+  transition:border-color 0.2s;
+}
+
+input:focus{
+  border-bottom:1px solid #111827;
+}
+
+/* ===============================
+   CALCULATED FIELDS
+================================ */
+
+input[readonly]{
+  border-bottom:1px solid #16a34a;
+  color:#065f46;
+  font-weight:700;
+  background:#f0fdf4;
+}
+/* RED when empty */
+input[type="number"]:not([readonly]):placeholder-shown {
+  border-bottom: 1px solid #ef4444;
+  color: #ef4444;
+}
+
+/* Normal when filled */
+input[type="number"]:not([readonly]):not(:placeholder-shown) {
+  border-bottom: 1px solid #cbd5e1;
+  color: #111827;
+}
+
+/* Focus overrides red */
+input[type="number"]:not([readonly]):focus {
+  border-bottom: 1px solid #111827;
+  color: #111827;
+}
+/* ===============================
+   REMOVE NUMBER ARROWS
+================================ */
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{
+  -webkit-appearance:none;
+  margin:0;
+}
+
+input[type="number"]{
+  -moz-appearance:textfield;
+}

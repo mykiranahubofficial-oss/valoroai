@@ -1,0 +1,161 @@
+<h3 class="section-title">Rate & Valuation</h3>
+
+<div class="sentence-row">
+
+  Rs.
+  <input type="number"  placeholder=" "[(ngModel)]="formData.rateFrom">
+
+  to
+
+  <input type="number" placeholder=" "[(ngModel)]="formData.rateTo">
+
+  per Sq. Ft. for Carpet area in the locality
+
+</div>
+
+
+<div class="sentence-row">
+
+  Adopted Composite Rate :
+
+  Rs.
+
+  <input type="number" placeholder=" "[(ngModel)]="formData.adoptedRateFrom">
+
+  to
+
+  <input type="number" placeholder=" "[(ngModel)]="formData.adoptedRateTo">
+
+  per Sq. Ft.
+
+</div>
+
+
+<h3 class="section-title">Break up for Rate</h3>
+
+<div class="grid-2">
+
+  <div class="field-inline">
+
+    Building + Services :
+
+    Rs.
+
+    <input type="number"
+    [(ngModel)]="formData.buildingServiceRate"
+    (ngModelChange)="calculateCompositeRate()">
+
+    per Sq.ft
+
+  </div>
+
+
+  <div class="field-inline">
+
+    Land + Others :
+
+    Rs.
+
+    <input type="number"
+    [(ngModel)]="formData.landOtherRate"
+    (ngModelChange)="calculateCompositeRate()">
+
+    per Sq.ft
+
+  </div>
+
+</div>
+
+
+<h3 class="section-title">Guideline Rate</h3>
+
+<div class="grid-4">
+
+  <div class="field-inline">
+
+    Guideline Rate :
+
+    Rs.
+
+    <input type="number" placeholder=" "[(ngModel)]="formData.guidelineRate">
+
+    per Sq.mt
+
+  </div>
+
+
+  <div class="field-inline">
+
+    Depreciated Guideline :
+
+    Rs.
+
+    <input type="number"
+    [(ngModel)]="formData.depreciatedGuidelineRate"
+    (ngModelChange)="calculateGuidelineValue()">
+
+    per Sq.mt
+
+  </div>
+
+
+  <div class="field-inline">
+
+    Built up Area :
+
+    <input type="number"
+    [(ngModel)]="formData.builtUpArea"
+    (ngModelChange)="calculateGuidelineValue()">
+
+    Sq.mt
+
+  </div>
+
+
+  <div class="field-inline">
+
+    Guideline Value :
+
+    Rs.
+
+    <input type="number"
+    [(ngModel)]="formData.guidelineCalculatedValue"
+    readonly>
+
+  </div>
+
+</div>
+
+
+<h3 class="section-title">Depreciation</h3>
+
+<div class="grid-4">
+
+  <div class="field-inline">
+    Age of Building :
+    <input type="number"
+    [(ngModel)]="formData.buildingAge"
+    (ngModelChange)="calculateDepreciation()"> Years
+  </div>
+
+  <div class="field-inline">
+    Life of Building :
+    <input type="number"
+    [(ngModel)]="formData.buildingLife"
+    (ngModelChange)="calculateDepreciation()"> Years
+  </div>
+
+  <div class="field-inline">
+    Depreciation :
+    <input type="number" placeholder=" "[(ngModel)]="formData.depreciationPercent"> %
+  </div>
+
+  <div class="field-inline">
+    Composite Rate :
+    Rs.
+    <input type="number"
+    [(ngModel)]="formData.compositeRate"
+    readonly> per Sq.ft
+  </div>
+
+</div>

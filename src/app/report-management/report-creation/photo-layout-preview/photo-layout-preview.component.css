@@ -1,0 +1,189 @@
+.preview-workspace {
+  display: flex;
+  flex-direction: column;   /* stack vertically */
+  height: 100%;
+  gap: 30px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* ======================
+CONTROL PANEL
+====================== */
+
+.control-panel {
+  display: flex;
+  justify-content: center;  /* center horizontally */
+  align-items: center;
+  width: 100%;
+}
+
+.control-panel button {
+  border: 1px solid black;
+  background: white;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.control-panel button.active {
+  background: black;
+  color: white;
+}
+
+/* ======================
+PAGES CONTAINER
+====================== */
+
+.pages-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;  /* center pages */
+  margin-left: 100px;
+}
+/* ======================
+A4 PAGE
+====================== */
+
+.a4-page {
+  width: 320px;
+  height: 450px;
+  background: white;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+/* ======================
+HEADER & FOOTER
+====================== */
+
+.page-header,
+.page-footer {
+  text-align: center;
+  font-size: 10px;
+  padding: 5px 0;
+}
+
+.page-header {
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 10px;
+}
+
+.page-footer {
+  border-top: 1px solid #e2e8f0;
+  margin-top: 10px;
+}
+
+/* ======================
+PHOTO GRID
+====================== */
+
+.photo-grid-a4 {
+  display: grid;
+  gap: 10px;
+  flex-grow: 1;
+  min-height: 0;
+}
+
+.grid-4 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.grid-6 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+}
+
+/* ======================
+PHOTO SLOT
+====================== */
+
+.photo-slot {
+  border: 1px dashed #cbd5e1;
+  border-radius: 4px;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #f8fafc;
+}
+
+.slot-content {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slot-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.slot-placeholder {
+  font-size: 11px;
+  color: #64748b;
+  text-align: center;
+}
+
+/* =====================================================
+TABLET
+===================================================== */
+
+@media (max-width: 1024px) {
+
+  .preview-workspace {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .control-panel {
+    flex-direction: row;
+    width: auto;
+    justify-content: center;
+  }
+
+  .pages-container {
+    justify-content: center;
+  }
+
+}
+
+/* =====================================================
+MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .a4-page {
+    width: 280px;
+    height: 400px;
+  }
+
+  .pages-container {
+    gap: 20px;
+  }
+
+}
+
+/* =====================================================
+SMALL MOBILE
+===================================================== */
+
+@media (max-width: 400px) {
+
+  .a4-page {
+    width: 240px;
+    height: 350px;
+  }
+
+}

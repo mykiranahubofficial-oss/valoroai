@@ -1,0 +1,67 @@
+
+[
+  {"village":"Pune City","taluka":"Haveli","district":"Pune","pincode":"411001"},
+  {"village":"Camp","taluka":"Haveli","district":"Pune","pincode":"411001"},
+  {"village":"Koregaon Park","taluka":"Haveli","district":"Pune","pincode":"411001"},
+
+  {"village":"Deccan","taluka":"Haveli","district":"Pune","pincode":"411004"},
+  {"village":"Shivajinagar","taluka":"Haveli","district":"Pune","pincode":"411005"},
+  {"village":"Yerwada","taluka":"Haveli","district":"Pune","pincode":"411006"},
+  {"village":"Aundh","taluka":"Haveli","district":"Pune","pincode":"411007"},
+
+  {"village":"Kharadi","taluka":"Haveli","district":"Pune","pincode":"411014"},
+  {"village":"Viman Nagar","taluka":"Haveli","district":"Pune","pincode":"411014"},
+
+  {"village":"Pimpri","taluka":"Haveli","district":"Pune","pincode":"411018"},
+
+  {"village":"Pashan","taluka":"Haveli","district":"Pune","pincode":"411021"},
+  {"village":"Bavdhan","taluka":"Haveli","district":"Pune","pincode":"411021"},
+
+  {"village":"Bhosari","taluka":"Haveli","district":"Pune","pincode":"411026"},
+
+  {"village":"Hadapsar","taluka":"Haveli","district":"Pune","pincode":"411028"},
+  {"village":"Magarpatta","taluka":"Haveli","district":"Pune","pincode":"411028"},
+
+  {"village":"Chinchwad","taluka":"Haveli","district":"Pune","pincode":"411033"},
+  {"village":"Tathawade","taluka":"Mulshi","district":"Pune","pincode":"411033"},
+
+  {"village":"Mundhwa","taluka":"Haveli","district":"Pune","pincode":"411036"},
+  {"village":"Bibwewadi","taluka":"Haveli","district":"Pune","pincode":"411037"},
+  {"village":"Kothrud","taluka":"Haveli","district":"Pune","pincode":"411038"},
+
+  {"village":"Sinhagad Road","taluka":"Haveli","district":"Pune","pincode":"411041"},
+  {"village":"Narhe","taluka":"Haveli","district":"Pune","pincode":"411041"},
+
+  {"village":"Swargate","taluka":"Haveli","district":"Pune","pincode":"411042"},
+  {"village":"Dhankawadi","taluka":"Haveli","district":"Pune","pincode":"411043"},
+  {"village":"Nigdi","taluka":"Haveli","district":"Pune","pincode":"411044"},
+
+  {"village":"Baner","taluka":"Haveli","district":"Pune","pincode":"411045"},
+  {"village":"Balewadi","taluka":"Haveli","district":"Pune","pincode":"411045"},
+
+  {"village":"Katraj","taluka":"Haveli","district":"Pune","pincode":"411046"},
+  {"village":"Lohegaon","taluka":"Haveli","district":"Pune","pincode":"411047"},
+  {"village":"Kondhwa","taluka":"Haveli","district":"Pune","pincode":"411048"},
+  {"village":"Karve Nagar","taluka":"Haveli","district":"Pune","pincode":"411052"},
+
+  {"village":"Wakad","taluka":"Mulshi","district":"Pune","pincode":"411057"},
+  {"village":"Hinjewadi","taluka":"Mulshi","district":"Pune","pincode":"411057"},
+  {"village":"Warje","taluka":"Haveli","district":"Pune","pincode":"411058"},
+
+  {"village":"Undri","taluka":"Haveli","district":"Pune","pincode":"411060"},
+  {"village":"Mohammadwadi","taluka":"Haveli","district":"Pune","pincode":"411060"},
+
+  {"village":"Ravet","taluka":"Haveli","district":"Pune","pincode":"412101"},
+  {"village":"Wagholi","taluka":"Haveli","district":"Pune","pincode":"412207"},
+
+  {"village":"Dapodi","taluka":"Haveli","district":"Pune","pincode":"411012"},
+  {"village":"Khadki","taluka":"Haveli","district":"Pune","pincode":"411003"},
+  {"village":"University","taluka":"Haveli","district":"Pune","pincode":"411007"},
+  {"village":"Bhosale Nagar","taluka":"Haveli","district":"Pune","pincode":"411007"},
+  {"village":"Ghorpadi","taluka":"Haveli","district":"Pune","pincode":"411001"},
+  {"village":"Fatima Nagar","taluka":"Haveli","district":"Pune","pincode":"411040"},
+    {"village":"Dhanori","taluka":"Haveli","district":"Pune","pincode":"411015"},
+    {"village":"Lohgaon","taluka":"Haveli","district":"Pune","pincode":"411047"}
+
+
+]

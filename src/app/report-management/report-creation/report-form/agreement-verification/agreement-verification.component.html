@@ -1,0 +1,86 @@
+<div class="av-wrapper" *ngIf="verification">
+
+  <!-- Section header -->
+  <div class="av-section-title">
+    🔍 Agreement Verification
+    <span class="av-confidence"
+          [class.high]="verification.agreementData?.confidence === 'high'"
+          [class.medium]="verification.agreementData?.confidence === 'medium'"
+          [class.low]="verification.agreementData?.confidence === 'low'">
+      AI: {{ verification.agreementData?.confidence }}
+    </span>
+  </div>
+
+  <!-- Summary bar -->
+  <div class="av-summary"
+       [class.all-match]="!hasMismatches"
+       [class.has-mismatches]="hasMismatches">
+    <span *ngIf="!hasMismatches">✅ All fields match between Index II and Agreement</span>
+    <span *ngIf="hasMismatches">⚠️ {{ mismatchCount }} mismatch(es) found — review below</span>
+  </div>
+
+  <!-- 4-column card grid -->
+  <div class="av-grid">
+    <div class="av-card"
+         *ngFor="let field of fields"
+         [class.av-card-mismatch]="isCorrected(field.key)"
+         [class.av-card-match]="!isCorrected(field.key)">
+
+      <!-- Card header -->
+      <div class="av-card-header">
+        <span class="av-card-label">{{ field.label }}</span>
+        <span class="av-badge av-badge-mismatch" *ngIf="isCorrected(field.key)">⚠️ Mismatch</span>
+        <span class="av-badge av-badge-match"    *ngIf="!isCorrected(field.key)">✅ Match</span>
+      </div>
+
+      <!-- Values -->
+      <div class="av-card-body">
+        <div class="av-pair">
+          <span class="av-pair-label">Index II</span>
+          <span class="av-pair-val">{{ getIndexValue(field.indexKey) || '—' }}</span>
+        </div>
+        <div class="av-pair av-pair-agree">
+          <span class="av-pair-label">Agreement</span>
+          <span class="av-pair-val">{{ getAgreeValue(field.agreeKey) || '—' }}</span>
+        </div>
+      </div>
+
+      <!-- Mismatch footer -->
+      <div class="av-card-footer" *ngIf="isCorrected(field.key)">
+        <div class="av-reason">
+          {{ verification.corrections[field.key]?.reason }}
+        </div>
+        <button class="av-apply-btn" (click)="applyCorrection(field.key, field.agreeKey)">
+          ✓ Apply Agreement Value
+        </button>
+      </div>
+
+      <!-- Source location -->
+      <div class="av-location" *ngIf="getSearchResult(field.searchKey)?.found">
+        📍 Page {{ getSearchResult(field.searchKey)?.pageNumber }},
+        Line {{ getSearchResult(field.searchKey)?.lineNumber }}
+        <span class="av-line-text">
+          "{{ getSearchResult(field.searchKey)?.lineText }}"
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- AI Notes -->
+  <div class="av-notes" *ngIf="verification.agreementData?.notes">
+    📝 <strong>AI Notes:</strong> {{ verification.agreementData.notes }}
+  </div>
+
+  <!-- Timings collapsible -->
+  <details class="av-timing">
+    <summary>⏱ Verification took {{ verification.totalMs }}ms — click to see breakdown</summary>
+    <div class="av-timing-grid">
+      <div class="av-timing-row" *ngFor="let t of timingEntries()">
+        <span class="av-timing-label">{{ t.label }}</span>
+        <span class="av-timing-val">{{ t.value }}</span>
+      </div>
+    </div>
+  </details>
+
+</div>

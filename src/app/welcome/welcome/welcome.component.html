@@ -1,0 +1,76 @@
+<div class="welcome-container">
+    <div class="brand-header">
+<span class="brand-name">
+  Valoro<span class="dot clickable" (click)="goToRegister()">.</span>AI
+</span>  </div>
+  <div class="welcome-left">
+    <div class="badge">🚀 Faster than ever</div>
+    <h1>
+      Generate Professional Reports 
+      <span class="time-break">within 10 min.</span>
+    </h1>
+    <p>Experience the future of Property Valuation. Streamlined, accurate, and incredibly fast.</p>
+    
+   <div class="features">
+      <div class="feature-item">
+        <span class="icon">🤖</span> Valora AI Document Scan
+      </div>
+      <div class="feature-item">
+        <span class="icon">📄</span> Effortless Report Generation
+      </div>
+      <div class="feature-item">
+        <span class="icon">☁️</span> Cloud Secured Database
+      </div>
+    </div>
+  </div>
+
+ <div class="login-section">
+  <div class="login-box">
+
+    <div class="login-header">
+      <h2>Office Portal</h2>
+      <p>Welcome back! Please enter your details.</p>
+    </div>
+
+    <!-- USERNAME -->
+    <div class="input-group">
+      <label>Username</label>
+      <input
+        type="text"
+        placeholder="e.g. admin_valora"
+        class="input-field"
+        [(ngModel)]="userId"
+      />
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="input-group">
+      <label>Password</label>
+      <input
+        type="password"
+        placeholder="••••••••"
+        class="input-field"
+        [(ngModel)]="userPass"
+      />
+    </div>
+
+    <!-- LOGIN BUTTON -->
+    <button
+      class="login-btn"
+      (click)="login()"
+      [disabled]="loading"
+    >
+      {{ loading ? 'Logging in...' : 'Sign In to Dashboard' }}
+    </button>
+
+    <!-- ERROR -->
+    <p *ngIf="error" style="color: red; margin-top: 10px;">
+      {{ error }}
+    </p>
+
+    <p class="login-footer">Protected by Valora Security Protocols</p>
+
+  </div>
+</div>
+
+</div>

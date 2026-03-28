@@ -1,0 +1,100 @@
+/* ================================
+   WRAPPER
+================================ */
+.wrapper {
+  padding: 22px 26px;
+  background: #ffffff;
+  font-family: 'Inter', sans-serif;
+  border: 1px solid #e4e7ec;
+  border-radius: 8px;
+}
+
+/* ================================
+   TITLE
+================================ */
+.section-title {
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #1f2937;
+  border-bottom: 2px solid #1f2937;
+  padding-bottom: 6px;
+  margin-bottom: 18px;
+}
+
+/* ================================
+   GRID
+================================ */
+.grid-2 {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ================================
+   FIELD CARD
+================================ */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border 0.2s ease;
+}
+
+.field:focus-within {
+  border-color: #111;
+}
+
+/* ================================
+   LABEL
+================================ */
+.field label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #374151;
+  line-height: 1.4;
+}
+
+.label-note {
+  font-size: 11px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+/* ================================
+   TEXTAREA — AUTO EXPANDING
+================================ */
+.field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid #d1d5db;
+  padding: 6px 2px;
+  font-size: 14px;
+  font-weight: 700;
+  background: transparent;
+  color: #111;
+  font-family: inherit;
+  outline: none;
+
+  /* Auto-expand — no fixed rows, no scrollbar */
+  resize: none;
+  overflow: hidden;
+  min-height: 36px;
+
+  line-height: 1.5;
+  transition: border-color 0.2s;
+}
+
+.field textarea:focus {
+  border-bottom-color: #111;
+}
+
+/* ================================
+   PLACEHOLDER
+================================ */
+.field textarea::placeholder {
+  color: #cbd5e1;
+  font-weight: 400;
+}

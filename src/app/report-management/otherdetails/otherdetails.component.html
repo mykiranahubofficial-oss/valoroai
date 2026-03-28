@@ -1,0 +1,64 @@
+<div class="other-details-wrapper">
+
+  <!-- TOP: SITE DETAILS (left) + VALUATION TABLE (right) -->
+  <div class="top-grid">
+    <div class="top-left">
+      <app-site-details [reportId]="reportId"></app-site-details>
+    </div>
+    <div class="top-right">
+      <!-- (dataChange) keeps valuationTableData in sync on every keystroke -->
+      <app-valuation-table
+  [reportId]="reportId"
+  [tableData]="tableData"  
+  (dataChange)="onValuationTableChange($event)">
+</app-valuation-table>
+    </div>
+  </div>
+
+  <h3 class="section-title">Classification of Area</h3>
+  <p class="section-desc">
+    Select the type of locality and governing authority where the property is located.
+  </p>
+
+  <div class="classification-row">
+    <div class="option-group">
+      <label class="group-label">Area Classification</label>
+      <div class="options">
+        <label><input type="radio" name="areaClass" [(ngModel)]="formData.classificationOfArea" value="High">
+          High</label>
+        <label><input type="radio" name="areaClass" [(ngModel)]="formData.classificationOfArea" value="Middle">
+          Middle</label>
+        <label><input type="radio" name="areaClass" [(ngModel)]="formData.classificationOfArea" value="Poor">
+          Poor</label>
+      </div>
+    </div>
+
+    <div class="option-group">
+      <label class="group-label">District</label>
+      <select class="form-select" [(ngModel)]="formData.district" (change)="onDistrictChange()">
+        <option *ngFor="let dist of districts" [value]="dist">{{dist}}</option>
+      </select>
+    </div>
+
+    <div class="option-group">
+      <label class="group-label">Local Authority (Mahanagarpalika)</label>
+      <div class="options vertical-options">
+        <div *ngIf="availableMunicipalities.length === 0" class="no-selection-msg">
+          Please select a district
+        </div>
+        <label *ngFor="let corp of availableMunicipalities">
+          <input type="radio" name="localAuthority" [(ngModel)]="formData.localAuthority" [value]="corp">
+          {{corp}}
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="valuation-section">
+    <app-rate-valuation [formData]="formData"></app-rate-valuation>
+  </div>
+  <div class="valuation-section">
+    <app-final-valuation [formData]="formData"></app-final-valuation>
+  </div>
+
+</div>

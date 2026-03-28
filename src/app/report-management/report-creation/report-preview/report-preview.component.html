@@ -1,0 +1,111 @@
+<!-- src/app/report-management/report-preview/report-preview.component.html -->
+
+<div class="preview-page">
+
+  <!-- ── HEADER ── -->
+  <div class="preview-header">
+    <div class="preview-header-left">
+      <div class="preview-logo">📄</div>
+      <div class="preview-title">
+        <h1>Valuation Report</h1>
+        <span class="preview-id">ID: {{ reportId }}</span>
+      </div>
+    </div>
+
+    <!-- 🔥 ACTION BUTTONS -->
+    <div class="preview-header-actions">
+
+      <!-- ✅ Download PDF -->
+      <button class="btn-download" (click)="downloadPdf()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 13 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="13"/>
+        </svg>
+        Download PDF
+      </button>
+
+      <!-- ✅ Download DOCX -->
+      <button class="btn-download" (click)="downloadDocx()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 13 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="13"/>
+        </svg>
+        Download DOCX
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ── BODY ── -->
+  <div class="preview-body">
+
+    <!-- ✅ PDF INLINE PREVIEW -->
+    <div class="preview-frame-wrap" *ngIf="safeUrl">
+      <iframe
+        [src]="safeUrl"
+        class="preview-frame"
+        frameborder="0">
+      </iframe>
+    </div>
+
+    <!-- ❌ FALLBACK (LOCALHOST / NO PREVIEW) -->
+    <div *ngIf="isLocalhostServer || !safeUrl" class="preview-localhost">
+
+      <div class="preview-localhost-icon">✅</div>
+      <h2>Report Generated Successfully!</h2>
+
+      <p class="preview-localhost-sub">
+        Your valuation report for <strong>{{ reportId }}</strong> is ready.
+      </p>
+
+      <div class="preview-localhost-note">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        Preview not available here. Please download the file.
+      </div>
+
+      <!-- 🔥 ACTIONS -->
+      <div class="preview-actions">
+
+        <!-- DOCX -->
+        <button class="btn-download-large" (click)="downloadDocx()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 13 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="13"/>
+          </svg>
+          Download Report (.docx)
+        </button>
+
+        <!-- PDF -->
+        <button class="btn-download-large" (click)="downloadPdf()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 13 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="13"/>
+          </svg>
+          Download PDF
+        </button>
+
+        <!-- OPEN DOCX -->
+        <button class="btn-open" (click)="openInWord()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15 3 21 3 21 9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+          Open DOCX in Word
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

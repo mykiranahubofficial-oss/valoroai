@@ -1,0 +1,48 @@
+<!-- Admin popup -->
+<app-admin-gate
+  *ngIf="!unlocked"
+  (accessGranted)="handleAccess($event)">
+</app-admin-gate>
+
+
+<div *ngIf="unlocked" class="register-page">
+
+  <!-- Top Tabs -->
+
+  <div class="top-tabs">
+
+    <button
+      [class.active]="activeTab === 'register'"
+      (click)="switchTab('register')">
+      Register
+    </button>
+
+    <button
+      [class.active]="activeTab === 'agencies'"
+      (click)="switchTab('agencies')">
+      Agencies
+    </button>
+
+     
+    <button
+      [class.active]="activeTab === 'photo-slots'"
+      (click)="switchTab('photo-slots')">
+      Photo Slots                          <!-- ✅ NEW TAB -->
+    </button>
+
+  </div>
+
+
+  <!-- Content -->
+
+  <div class="tab-content">
+
+<div class="register-form-wrapper" *ngIf="activeTab === 'register'">
+  <app-register-form></app-register-form>
+</div>
+  <app-agencies *ngIf="activeTab === 'agencies'"></app-agencies>
+
+      <app-photo-slots *ngIf="activeTab === 'photo-slots'"></app-photo-slots>  <!-- ✅ NEW -->
+  </div>
+
+</div>

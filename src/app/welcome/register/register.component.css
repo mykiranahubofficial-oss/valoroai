@@ -1,0 +1,99 @@
+.register-page{
+  max-width:900px;
+  margin:60px auto;
+  padding:0 20px;
+}
+
+/* center form properly */
+
+.register-form-wrapper{
+  display:flex;
+  justify-content:center;
+  width:100%;
+}
+
+/* Tabs */
+
+.top-tabs{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+.top-tabs button{
+  padding:10px 20px;
+  border:none;
+  border-radius:10px;
+  background:#e2e8f0;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.top-tabs button.active{
+  background:#6c63ff;
+  color:white;
+}
+
+/* card */
+
+.tab-content{
+  background:white;
+  padding:40px;
+  border-radius:18px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
+
+
+
+/* =========================
+   Tablet
+========================= */
+
+@media (max-width:768px){
+
+  .register-page{
+    margin:40px auto;
+  }
+
+  .tab-content{
+    padding:30px;
+  }
+
+  .top-tabs{
+    gap:8px;
+  }
+
+  .top-tabs button{
+    padding:8px 16px;
+    font-size:14px;
+  }
+
+}
+
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width:480px){
+
+  .register-page{
+    margin:30px auto;
+    padding:0 15px;
+  }
+
+  .top-tabs{
+    flex-direction:column;
+    width:100%;
+  }
+
+  .top-tabs button{
+    width:100%;
+    text-align:center;
+  }
+
+  .tab-content{
+    padding:25px 20px;
+  }
+
+}

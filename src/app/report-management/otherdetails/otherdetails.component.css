@@ -1,0 +1,177 @@
+/* ================================
+   WRAPPER
+================================ */
+.other-details-wrapper{
+  padding:24px;
+  font-family:'Inter', Arial, sans-serif;
+  background:#ffffff;
+  font-size:14px;
+  line-height:1.5;
+  color:#111827;
+}
+
+/* ================================
+   SECTION TITLE
+================================ */
+.section-title{
+  margin-top:26px;
+  margin-bottom:6px;
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:0.03em;
+  border-bottom:1px solid #e5e7eb;
+  padding-bottom:6px;
+}
+
+/* ================================
+   SECTION DESCRIPTION
+================================ */
+.section-desc{
+  font-size:13px;
+  color:#6b7280;
+  margin-bottom:18px;
+}
+
+/* ================================
+   TOP GRID
+================================ */
+.top-grid{
+  display:grid;
+  grid-template-columns:1fr 2fr;
+  gap:22px;
+  align-items:start;
+  margin-bottom:28px;
+}
+
+.top-left,
+.top-right{
+  min-width:0;
+}
+
+/* ================================
+   CLASSIFICATION GRID
+================================ */
+.classification-row{
+  display:grid;
+  grid-template-columns:1fr 1fr 1.4fr;
+  gap:26px;
+  margin-bottom:28px;
+}
+
+/* ================================
+   OPTION GROUP
+================================ */
+.option-group{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+/* LABEL */
+
+.group-label{
+  font-weight:600;
+  font-size:13px;
+  color:#111827;
+}
+
+/* ================================
+   OPTIONS
+================================ */
+.options{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.options label{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:13px;
+  cursor:pointer;
+}
+
+/* vertical radio list */
+
+.vertical-options{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.vertical-options label{
+  align-items:flex-start;
+}
+
+/* ================================
+   RADIO BUTTON
+================================ */
+input[type="radio"]{
+  transform:scale(1.15);
+  cursor:pointer;
+}
+
+/* ================================
+   SELECT
+================================ */
+.form-select{
+  width:100%;
+  padding:8px 10px;
+  border:1px solid #d1d5db;
+  border-radius:4px;
+  background:#ffffff;
+  font-size:13px;
+  outline:none;
+  transition:border-color 0.2s;
+}
+
+.form-select:focus{
+  border-color:#111827;
+}
+
+/* ================================
+   NO SELECTION MESSAGE
+================================ */
+.no-selection-msg{
+  font-size:12px;
+  color:#9ca3af;
+  font-style:italic;
+}
+
+/* ================================
+   VALUATION SECTION
+================================ */
+.valuation-section{
+  margin-top:26px;
+}
+
+/* ================================
+   SAVE BUTTON
+================================ */
+.save-section{
+  margin-top:36px;
+  display:flex;
+  justify-content:flex-end;
+}
+
+.save-btn{
+  background:#111827;
+  color:#ffffff;
+  border:none;
+  padding:10px 24px;
+  font-size:13px;
+  font-weight:600;
+  border-radius:4px;
+  cursor:pointer;
+  transition:background 0.2s ease;
+}
+
+.save-btn:hover{
+  background:#1f2937;
+}
+
+.save-btn:disabled{
+  background:#9ca3af;
+  cursor:not-allowed;
+}

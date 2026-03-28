@@ -1,0 +1,39 @@
+<aside class="gallery-sidebar">
+
+  <!-- HEADER -->
+  <div class="sidebar-header">
+    <h3>Visit Photos</h3>
+    <label class="upload-btn-label">
+      <span>+ Add Photos</span>
+      <input type="file" multiple (change)="onLocalUpload($event)" hidden>
+    </label>
+  </div>
+
+  <!-- PHOTO GRID -->
+  <div class="gallery-grid">
+
+    <ng-container *ngIf="(uploadedPhotos$ | async) as photos">
+    <ng-container *ngIf="(selectedPhotos$ | async) as selected">
+
+      <ng-container *ngFor="let photo of photos">
+        <div
+          class="gallery-item"
+          [class.selected]="isSelected(photo, selected)"
+          (click)="togglePhoto(photo)"
+        >
+          <img [src]="photo.preview" loading="lazy"/>
+          <div class="check-badge" *ngIf="isSelected(photo, selected)">✓</div>
+          <button class="delete-btn" (click)="deletePhoto($event, photo)">✕</button>
+        </div>
+      </ng-container>
+
+      <div class="empty-gallery" *ngIf="photos.length === 0">
+        No photos yet. Click <strong>+ Add Photos</strong> to upload.
+      </div>
+
+    </ng-container>
+    </ng-container>
+
+  </div>
+
+</aside>

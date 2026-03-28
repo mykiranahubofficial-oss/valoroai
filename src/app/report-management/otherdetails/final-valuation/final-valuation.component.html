@@ -1,0 +1,193 @@
+<h3 class="section-title">Final Valuation</h3>
+
+<div class="valuation-grid">
+
+  <!-- FAIR MARKET VALUE -->
+
+  <div class="valuation-box">
+
+    <label class="valuation-title">FAIR MARKET VALUE</label>
+
+    <div class="valuation-input">
+
+      Rs.
+
+      <input
+        type="text"
+        placeholder=" "
+        [(ngModel)]="formData.fairMarketValue"
+        (input)="onCurrencyInput($event,'fairMarketValue')"
+        (focus)="removeSlash('fairMarketValue')"
+        (blur)="addSlash('fairMarketValue')">
+
+    </div>
+
+    <div class="valuation-words" *ngIf="formData.fairMarketValueCharacter">
+      {{ formData.fairMarketValueCharacter }}
+    </div>
+
+  </div>
+
+
+  <!-- REALIZABLE VALUE -->
+
+  <div class="valuation-box">
+
+    <label class="valuation-title">REALIZABLE VALUE</label>
+
+    <div class="valuation-result">
+
+      Rs.
+
+      <input
+        type="text"
+        placeholder=" "
+        [(ngModel)]="formData.realizableValue"
+        (focus)="enableManualEdit('realizableValue'); removeSlash('realizableValue')"
+        (input)="onCurrencyInput($event,'realizableValue')"
+        (blur)="addSlash('realizableValue')">
+
+    </div>
+
+    <div class="valuation-words" *ngIf="formData.realizableValueCharacter">
+      {{ formData.realizableValueCharacter }}
+    </div>
+
+    <div class="valuation-formula">
+
+      Calculation :
+      FMV −
+
+      <input
+        type="number"
+        placeholder=" "
+        [(ngModel)]="realizablePercent"
+        (ngModelChange)="calculateValuations()"> %
+
+    </div>
+
+  </div>
+
+
+  <!-- DISTRESS VALUE -->
+
+  <div class="valuation-box">
+
+    <label class="valuation-title">DISTRESS SALE VALUE</label>
+
+    <div class="valuation-result">
+
+      Rs.
+
+      <input
+        type="text"
+        placeholder=" "
+        [(ngModel)]="formData.distressValue"
+        (focus)="enableManualEdit('distressValue'); removeSlash('distressValue')"
+        (input)="onCurrencyInput($event,'distressValue')"
+        (blur)="addSlash('distressValue')">
+
+    </div>
+
+    <div class="valuation-formula">
+
+      Calculation :
+      FMV −
+
+      <input
+        type="number"
+        placeholder=" "
+        [(ngModel)]="distressPercent"
+        (ngModelChange)="calculateValuations()"> %
+
+    </div>
+
+  </div>
+
+
+  <!-- INSURABLE VALUE -->
+
+  <div class="valuation-box">
+
+    <label class="valuation-title">INSURABLE VALUE</label>
+
+    <div class="valuation-input">
+
+      Rs.
+
+      <input
+        type="text"
+        placeholder=" "
+        [(ngModel)]="formData.insurableValue"
+        (input)="onCurrencyInput($event,'insurableValue')"
+        (focus)="removeSlash('insurableValue')"
+        (blur)="addSlash('insurableValue')">
+
+    </div>
+
+  </div>
+
+
+  <!-- RENTAL VALUE -->
+
+  <div class="valuation-box">
+
+    <label class="valuation-title">RENTAL VALUE</label>
+
+    <div class="valuation-result">
+
+      Rs.
+
+      <input
+        type="text"
+        placeholder=" "
+        [(ngModel)]="formData.rentalValue"
+        (focus)="enableManualEdit('rentalValue'); removeSlash('rentalValue')"
+        (input)="onCurrencyInput($event,'rentalValue')"
+        (blur)="addSlash('rentalValue')">
+
+      / Month
+
+    </div>
+
+    <div class="valuation-formula">
+
+      Calculation :
+      (FMV ×
+
+      <input
+      placeholder=" "
+        type="number"
+        [(ngModel)]="rentalPercent"
+        (ngModelChange)="calculateValuations()"> %
+
+      ) / 12
+
+    </div>
+
+  </div>
+
+
+  <!-- GUIDELINE VALUE -->
+
+  <div class="valuation-box">
+
+    <label class="valuation-title">GUIDELINE / BOOK VALUE</label>
+
+    <div class="valuation-input">
+
+      Rs.
+
+      <input
+        type="text"
+        placeholder=" "
+        [(ngModel)]="formData.guidelineBookValue"
+        (input)="onCurrencyInput($event,'guidelineBookValue')"
+        (focus)="removeSlash('guidelineBookValue')"
+        (blur)="addSlash('guidelineBookValue')">
+
+    </div>
+
+  </div>
+
+</div>
