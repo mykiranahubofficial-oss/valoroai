@@ -1,7 +1,7 @@
 import { Component, HostListener, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RepmanageserviceService } from '../../repmanageservice.service';
-import { environment } from '../../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { FormsModule } from '@angular/forms';
 
 @Component({

@@ -8,7 +8,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { switchMap, catchError, tap } from 'rxjs/operators';
 import { fromFetch } from 'rxjs/fetch';
 
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 export interface SelectDraftResponse {
   success: boolean;
   message: string;
